@@ -4,8 +4,9 @@ const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {
-      // define association here
+    toSafeObject() {
+      const { id, username, email } = this; // context will be the User instance
+      return { id, username, email };
     }
     validatePassword(password) {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
@@ -35,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
         hashedPassword
       });
       return await User.scope('currentUser').findByPk(user.id);
+    }
+    static associate(models) {
+      // define association here
     }
   };
   
