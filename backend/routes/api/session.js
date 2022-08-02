@@ -42,7 +42,9 @@ router.post(
       }
   
       await setTokenCookie(res, user);
-  
+      if(user){
+        res.status(200)
+      }
       return res.json({
         user
       });
@@ -64,10 +66,14 @@ router.get(
   (req, res) => {
     const { user } = req;
     if (user) {
+      res.status(200)
       return res.json({
         user: user.toSafeObject()
       });
-    } else return res.json({});
+    } else return res.json({
+      "message": "Authentication required",
+      "statusCode": 401
+    });
   }
 );
 
