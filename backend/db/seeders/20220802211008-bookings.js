@@ -5,35 +5,36 @@ module.exports = {
 
     await queryInterface.bulkInsert('Bookings', [
       {
-        review: "Best place in town. Can't wait to come back",
-        stars: 9,
-        userId: 2,
-        spotId: 1
-      },
-      {
-        review: "The WORST!!! Never have I ever...",
-        stars: 1,
-        userId: 3,
-        spotId: 3
-      },
-      {
-        review: "BRRRR.. BEEEP.. BOOP.. 1000110111010011",
-        stars: 7,
+        spotId: 1,
         userId: 1,
-        spotId: 4
+        startDate: '2022-10-22',
+        endDate: '2022-10-27'
       },
       {
-        review: "Come for the views, stay for the burgers!",
-        stars: 8,
-        userId: 4,
-        spotId: 2
+        spotId: 2,
+        userId: 3,
+        startDate: '2022-11-22',
+        endDate: '2022-11-30'
       },
       {
-        review: "Just stayed with my family. 5/5",
-        stars: 5,
+        spotId: 3,
+        userId: 2,
+        startDate: '2022-11-15',
+        endDate: '2022-12-30'
+      },
+      {
+        spotId: 4,
         userId: 5,
-        spotId: 1
-      }
+        startDate: '2022-12-29',
+        endDate: '2023-01-07'
+      },
+      {
+        spotId: 2,
+        userId: 4,
+        startDate: '2022-10-22',
+        endDate: '2022-10-24'
+      },
+
     ], {});
   },
 
