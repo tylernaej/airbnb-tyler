@@ -4,10 +4,11 @@ const { restoreUser } = require('../../utils/auth');
 const {Booking, Image, Review, Spot, User, sequelize} = require('../../db/models');
 
 router.get('/', async(req, res) => {
+    const response = {}
     const spots = await Spot.findAll({
         attributes: {
             include: [[sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-            "avgStarRating"],
+            "avgRating"],
         ]},
         include: 
         [
@@ -17,7 +18,6 @@ router.get('/', async(req, res) => {
         group: ["Spot.id"],
         raw: true
     });
-    console.log(spots)
     spots.forEach(spot => {
         if(spot['Images.url']){
             spot.previewImage = spot['Images.url']
@@ -25,28 +25,40 @@ router.get('/', async(req, res) => {
         delete spot['Images.url']
         delete spot['Images.previewImage']
     });
+    response.spots = spots
     res.status(200)
-    res.json(spots)
+    res.json(response)
 })
 
 router.get('/current',
     restoreUser,
     async(req, res) => {
         const { user } = req;
-        console.log(user.dataValues.id)
-        const userSpots = await Spot.findAll({
+        let response = {}
+        const spots = await Spot.findAll({
             attributes: {
                 include: [[sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-                "avgStarRating"],
+                "avgRating"],
             ]},
             where: {
                 ownerId: user.dataValues.id
             },
             include: [
-                {model: Review, attributes: []}
-            ]
+                {model: Review, attributes: []},
+                {model: Image, attributes: ['url', 'previewImage']},
+            ],
+            raw: true
         })
-    res.json(userSpots)
+        spots.forEach(spot => {
+            if(spot['Images.url']){
+                spot.previewImage = spot['Images.url']
+            }
+            delete spot['Images.url']
+            delete spot['Images.previewImage']
+        });
+        response.spots = spots
+        res.status(200)
+        res.json(response)
 })
 
 router.get('/:spotId', async(req, res) => {
