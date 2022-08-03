@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { restoreUser } = require('../../utils/auth');
 const {Booking, Image, Review, Spot, User, sequelize} = require('../../db/models');
+const { response } = require('express');
 
 router.get('/', async(req, res) => {
+    
     const response = {}
+
     const spots = await Spot.findAll({
         attributes: {
             include: [[sequelize.fn("AVG", sequelize.col("Reviews.stars")),
@@ -18,6 +21,7 @@ router.get('/', async(req, res) => {
         group: ["Spot.id"],
         raw: true
     });
+
     spots.forEach(spot => {
         if(spot['Images.url']){
             spot.previewImage = spot['Images.url']
@@ -25,6 +29,7 @@ router.get('/', async(req, res) => {
         delete spot['Images.url']
         delete spot['Images.previewImage']
     });
+
     response.spots = spots
     res.status(200)
     res.json(response)
@@ -33,8 +38,11 @@ router.get('/', async(req, res) => {
 router.get('/current',
     restoreUser,
     async(req, res) => {
+
         const { user } = req;
+
         let response = {}
+
         const spots = await Spot.findAll({
             attributes: {
                 include: [[sequelize.fn("AVG", sequelize.col("Reviews.stars")),
@@ -49,6 +57,7 @@ router.get('/current',
             ],
             raw: true
         })
+
         spots.forEach(spot => {
             if(spot['Images.url']){
                 spot.previewImage = spot['Images.url']
@@ -56,6 +65,7 @@ router.get('/current',
             delete spot['Images.url']
             delete spot['Images.previewImage']
         });
+
         response.spots = spots
         res.status(200)
         res.json(response)
@@ -64,25 +74,42 @@ router.get('/current',
 router.get('/:spotId', async(req, res) => {
     const spot = await Spot.findByPk(req.params.spotId, {
         attributes: {
-            include: [[sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-            "avgStarRating"],
-            [sequelize.fn("COUNT", sequelize.col("Reviews.stars")),
-            "numReviews"
-        ]]},
+            include: [
+                [sequelize.fn("COUNT", sequelize.col("Reviews.stars")),
+                "numReviews"],
+                [sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+                "avgRating"]
+        ]},
         include: 
         [
-            {
-                model: Review,                
-                group: ['Review.id'],
-                include: {
-                    model: Image, 
-                },
-            },
-            {
-                model: User
-            }
+            {model: Review, attributes: []},
+            {model: Image, attributes: ['id','url']},
+            {model: User, attributes: ['id','firstName','lastName']}
         ],
-    })
+        raw: true
+    });
+    let imagesArray = [];
+    let imagesObject = {};
+    let ownerObject = {};
+
+    imagesObject.id = spot['Images.id'];
+    imagesObject.imageableId = spot.id ;
+    imagesObject.url = spot['Images.url'];
+    imagesArray.push(imagesObject);
+    spot["Images"]= imagesArray;
+
+    ownerObject.id= spot['User.id']
+    ownerObject.firstName= spot['User.firstName']
+    ownerObject.lastName= spot['User.lastName']
+    spot['Owner']= ownerObject
+
+    delete spot['Images.id']
+    delete spot['Images.url']
+    delete spot['User.id']
+    delete spot['User.firstName']
+    delete spot['User.lastName']
+
+    res.status(200)
     res.json(spot)
 })
 
