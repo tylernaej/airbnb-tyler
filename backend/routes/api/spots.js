@@ -36,7 +36,6 @@ router.get('/', async(req, res) => {
     res.status(200)
     res.json(response)
 })
-
 router.get('/current',
     requireAuth,
     async(req, res) => {
@@ -72,7 +71,6 @@ router.get('/current',
         res.status(200)
         res.json(response)
 })
-
 router.get('/:spotId', async(req, res) => {
     const spot = await Spot.findByPk(req.params.spotId, {
         attributes: {
@@ -121,7 +119,6 @@ router.get('/:spotId', async(req, res) => {
     res.status(200)
     res.json(spot)
 });
-
 const validateReview = [
     check('address')
         .exists({checkFalsy: true})
@@ -159,7 +156,6 @@ const validateReview = [
         .withMessage("Price per day is required"),
     handleValidationErrors
 ]
-
 router.post('/',
     requireAuth,
     validateReview,
@@ -194,7 +190,6 @@ router.post('/',
         res.status(201)
         res.json(newSpot)
 });
-
 router.post('/:spotId/images', 
     requireAuth,
     async (req, res) => {
@@ -210,15 +205,15 @@ router.post('/:spotId/images',
                 "statusCode": 404
               })
         }
-
-        if(spot.id !== user.id) {
+        console.log(spot.id, spot.ownerId, user.id)
+        if(spot.ownerId !== user.id) {
             res.status(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
               })
         }
-        if(spot.id === user.id) {
+        if(spot.ownerId === user.id) {
             let response = {}
             
             const newImage = Image.build({
@@ -238,7 +233,6 @@ router.post('/:spotId/images',
             res.json(response)
         }
 });
-
 router.put('/:spotId',
     requireAuth,
     validateReview,
@@ -255,7 +249,7 @@ router.put('/:spotId',
             })
         }
         
-        if(spot.id !== user.id) {
+        if(spot.ownerId !== user.id) {
             res.status(403)
             res.json({
                 "message": "Forbidden",
@@ -275,7 +269,7 @@ router.put('/:spotId',
             price
         } = req.body
 
-        if(spot.id === user.id){
+        if(spot.ownerId === user.id){
             spot.address = address,
             spot.city = city,
             spot.state = state,
@@ -292,6 +286,39 @@ router.put('/:spotId',
             res.json(spot)
         }
     }
+);
+router.delete('/:spotId',
+    requireAuth,
+    async (req, res) => {
+
+        const { user } = req;
+        const spot = await Spot.findByPk(req.params.spotId)
+
+        if(!spot) {
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+
+        if(spot.ownerId !== user.id) {
+            res.status(403)
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+
+        if(spot.ownerId === user.id) {
+            console.log('test')
+            await spot.destroy()
+            res.status(200)
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+              })
+        }
+    }    
 )
 
 module.exports = router;
