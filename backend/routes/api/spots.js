@@ -126,38 +126,37 @@ const validateReview = [
     check('address')
         .exists({checkFalsy: true})
         .isLength({min: 2})
-        .withMessage("Spot address must exist and must be more than 2 characters."),
+        .withMessage("Street address is required"),
     check('city')
         .exists({checkFalsy: true})
         .isLength({min: 2})
-        .withMessage("Spot city must exist and must be more than 2 characters."),
+        .withMessage("City is required"),
     check('state')
         .exists({checkFalsy: true})
         .isLength({min: 2})
-        .withMessage("Spot state must exist and must be more than 2 characters."),
+        .withMessage("State is required"),
     check('country')
         .exists({checkFalsy: true})
         .isLength({min: 2})
-        .withMessage("Spot country must exist and must be more than 2 characters."),
+        .withMessage("Country is required"),
     check('lat')
         .exists({checkFalsy: true})
         .isLength({min:-90, max:90})
-        .withMessage("Spot lat must exist and must be between -90 and 90."),
+        .withMessage("Latitude is not valid"),
     check('lng')
         .exists({checkFalsy: true})
         .isLength({min:-180, max:180})
-        .withMessage("Spot lng must exist and must be between -180 and 180."),
+        .withMessage("Longitude is not valid"),
     check('name')
         .exists({checkFalsy: true})
-        .isLength({min: 2})
-        .withMessage("Spot name must exist and must be more than 2 characters."),
+        .isLength({min: 2, max: 50})
+        .withMessage("Name must be less than 50 characters"),
     check('description')
         .exists({checkFalsy: true})
-        .withMessage("Spot description must exist and be more than 10 characters."),
+        .withMessage("Description is required"),
     check('price')
         .exists({checkFalsy: true})
-        .isInt()
-        .withMessage("Spot price must exist and must be an integer."),
+        .withMessage("Price per day is required"),
     handleValidationErrors
 ]
 
@@ -196,8 +195,103 @@ router.post('/',
         res.json(newSpot)
 });
 
+router.post('/:spotId/images', 
+    requireAuth,
+    async (req, res) => {
+        
+        const { user } = req;
+        const { url, previewImage} = req.body
+        
+        const spot = await Spot.findByPk(req.params.spotId)
 
+        if(!spot){
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              })
+        }
 
+        if(spot.id !== user.id) {
+            res.status(403)
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+        if(spot.id === user.id) {
+            let response = {}
+            
+            const newImage = Image.build({
+                url,
+                previewImage,
+                spotId: spot.id,
+                reviewId: null,
+                userId: user.id
+            })
+            await newImage.save()
 
+            response.id = newImage.id
+            response.imageableId = newImage.spotId
+            response.url = newImage.url
+
+            res.status(200)
+            res.json(response)
+        }
+});
+
+router.put('/:spotId',
+    requireAuth,
+    validateReview,
+    async (req, res) => {
+
+        const { user } = req;
+
+        const spot = await Spot.findByPk(req.params.spotId)
+
+        if(!spot) {
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+        
+        if(spot.id !== user.id) {
+            res.status(403)
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+
+        const {
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        } = req.body
+
+        if(spot.id === user.id){
+            spot.address = address,
+            spot.city = city,
+            spot.state = state,
+            spot.country = country,
+            spot.lat = lat,
+            spot.lng = lng,
+            spot.name = name,
+            spot.description = description,
+            spot.price = price
+
+            await spot.save()
+            
+            res.status(200)
+            res.json(spot)
+        }
+    }
+)
 
 module.exports = router;
