@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// const { restoreUser } = require('../../utils/auth');
+const { check } = require('express-validator')
+const { handleValidationErrors } = require('../../utils/validation')
 const { requireAuth } = require('../../utils/auth')
 const {Booking, Image, Review, Spot, User, sequelize} = require('../../db/models');
 const { response } = require('express');
@@ -89,6 +90,13 @@ router.get('/:spotId', async(req, res) => {
         ],
         raw: true
     });
+
+    if(!spot.id) {
+        return res.json({
+        "message": "Spot couldn't be found",
+        "statusCode": 404
+    })};
+    
     let imagesArray = [];
     let imagesObject = {};
     let ownerObject = {};
@@ -114,8 +122,48 @@ router.get('/:spotId', async(req, res) => {
     res.json(spot)
 });
 
+const validateReview = [
+    check('address')
+        .exists({checkFalsy: true})
+        .isLength({min: 2})
+        .withMessage("Spot address must exist and must be more than 2 characters."),
+    check('city')
+        .exists({checkFalsy: true})
+        .isLength({min: 2})
+        .withMessage("Spot city must exist and must be more than 2 characters."),
+    check('state')
+        .exists({checkFalsy: true})
+        .isLength({min: 2})
+        .withMessage("Spot state must exist and must be more than 2 characters."),
+    check('country')
+        .exists({checkFalsy: true})
+        .isLength({min: 2})
+        .withMessage("Spot country must exist and must be more than 2 characters."),
+    check('lat')
+        .exists({checkFalsy: true})
+        .isLength({min:-90, max:90})
+        .withMessage("Spot lat must exist and must be between -90 and 90."),
+    check('lng')
+        .exists({checkFalsy: true})
+        .isLength({min:-180, max:180})
+        .withMessage("Spot lng must exist and must be between -180 and 180."),
+    check('name')
+        .exists({checkFalsy: true})
+        .isLength({min: 2})
+        .withMessage("Spot name must exist and must be more than 2 characters."),
+    check('description')
+        .exists({checkFalsy: true})
+        .withMessage("Spot description must exist and be more than 10 characters."),
+    check('price')
+        .exists({checkFalsy: true})
+        .isInt()
+        .withMessage("Spot price must exist and must be an integer."),
+    handleValidationErrors
+]
+
 router.post('/',
     requireAuth,
+    validateReview,
     async (req, res) => {
 
         const { user } = req;
@@ -146,7 +194,7 @@ router.post('/',
 
         res.status(201)
         res.json(newSpot)
-    });
+});
 
 
 
