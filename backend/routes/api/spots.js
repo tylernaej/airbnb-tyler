@@ -21,6 +21,7 @@ router.get('/', async(req, res) => {
             {model: Image, attributes: ['url', 'previewImage']},
         ],
         group: ["Spot.id"],
+        group: ["Images.url"],
         raw: true
     });
 
