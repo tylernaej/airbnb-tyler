@@ -87,6 +87,9 @@ router.get('/current',
         res.json(response)
 })
 router.get('/:spotId', async(req, res) => {
+    let response = {}
+    let responseArray = []
+
     const spot = await Spot.findByPk(req.params.spotId, {
         attributes: {
             include: [
@@ -98,8 +101,6 @@ router.get('/:spotId', async(req, res) => {
         include: 
         [
             {model: Review, attributes: []},
-            {model: Image, attributes: ['id','url']},
-            {model: User, attributes: ['id','firstName','lastName']}
         ],
         raw: true
     });
@@ -110,26 +111,24 @@ router.get('/:spotId', async(req, res) => {
         "statusCode": 404
     })};
     
-    let imagesArray = [];
-    let imagesObject = {};
-    let ownerObject = {};
+    const images = await Image.findAll({
+        where: {
+            spotId: spot.id
+        },
+        attributes: ['id','url'],
+        raw: true
+    })
+    
+    images.forEach(image => {
+        image.imageableId = spot.id
+    })
+    spot['Images'] = images;
 
-    imagesObject.id = spot['Images.id'];
-    imagesObject.imageableId = spot.id ;
-    imagesObject.url = spot['Images.url'];
-    imagesArray.push(imagesObject);
-    spot["Images"]= imagesArray;
-
-    ownerObject.id= spot['User.id']
-    ownerObject.firstName= spot['User.firstName']
-    ownerObject.lastName= spot['User.lastName']
-    spot['Owner']= ownerObject
-
-    delete spot['Images.id']
-    delete spot['Images.url']
-    delete spot['User.id']
-    delete spot['User.firstName']
-    delete spot['User.lastName']
+    const owner = await User.findByPk(spot['ownerId'], {
+        attributes: ['id','firstName','lastName'],
+        raw: true
+    })
+    spot['Owner'] = owner
 
     res.status(200)
     res.json(spot)
