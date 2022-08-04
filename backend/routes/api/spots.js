@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { restoreUser } = require('../../utils/auth');
+// const { restoreUser } = require('../../utils/auth');
+const { requireAuth } = require('../../utils/auth')
 const {Booking, Image, Review, Spot, User, sequelize} = require('../../db/models');
 const { response } = require('express');
 
@@ -36,7 +37,7 @@ router.get('/', async(req, res) => {
 })
 
 router.get('/current',
-    restoreUser,
+    requireAuth,
     async(req, res) => {
 
         const { user } = req;
@@ -111,7 +112,41 @@ router.get('/:spotId', async(req, res) => {
 
     res.status(200)
     res.json(spot)
-})
+});
+
+router.post('/',
+    requireAuth,
+    async (req, res) => {
+
+        const { user } = req;
+        const {
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        } = req.body
+        const newSpot = Spot.build({
+            ownerId: user.id,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
+        await newSpot.save();
+
+        res.status(201)
+        res.json(newSpot)
+    });
 
 
 

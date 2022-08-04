@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true,
         len: [2, 50]
       }
     },
@@ -37,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true,
         len: [2, 50]
       }
     },
@@ -45,7 +43,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isAlpha: true,
         len: [2, 50]
       }
     },
@@ -82,6 +79,16 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: new Date()
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: new Date()
     }
   }, {
     sequelize,
