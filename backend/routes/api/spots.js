@@ -18,7 +18,6 @@ router.get('/', async(req, res) => {
         include: 
         [
             {model: Review, attributes: []}, 
-            // {model: Image, attributes: ['url', 'previewImage']},
         ],
         group: ["Spot.id"],
         raw: true
@@ -38,11 +37,6 @@ router.get('/', async(req, res) => {
                 spot.previewImage = image.url
             }
         })
-        // if(spot['Images.url']){
-        //     spot.previewImage = spot['Images.url']
-        // }
-        // delete spot['Images.url']
-        // delete spot['Images.previewImage']
     });
 
     response.spots = spots
@@ -67,17 +61,24 @@ router.get('/current',
             },
             include: [
                 {model: Review, attributes: []},
-                {model: Image, attributes: ['url', 'previewImage']},
             ],
             raw: true
         })
 
+        const images = await Image.findAll({
+            where: {
+                previewImage: true
+            }, 
+            attributes: ['id','url','spotId'],
+            raw: true
+        })
+
         spots.forEach(spot => {
-            if(spot['Images.url']){
-                spot.previewImage = spot['Images.url']
-            }
-            delete spot['Images.url']
-            delete spot['Images.previewImage']
+            images.forEach(image => {
+                if(image.spotId === spot.id) {
+                    spot.previewImage = image.url
+                }
+            })
         });
 
         response.spots = spots
