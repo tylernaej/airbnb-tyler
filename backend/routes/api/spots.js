@@ -116,6 +116,7 @@ router.get('/:spotId', async(req, res) => {
             spotId: spot.id
         },
         attributes: ['id','url'],
+        group: ["Spot.id"],
         raw: true
     })
     
