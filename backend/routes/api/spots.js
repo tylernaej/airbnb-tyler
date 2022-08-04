@@ -310,7 +310,7 @@ router.delete('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
-            res.json({
+            return res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
             })
@@ -325,7 +325,7 @@ router.delete('/:spotId',
         }
 
         if(spot.ownerId === user.id) {
-            console.log('test')
+            console.log('--------------------------------------')
             await spot.destroy()
             res.status(200)
             res.json({
