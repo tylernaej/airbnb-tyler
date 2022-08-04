@@ -62,6 +62,7 @@ router.get('/current',
             include: [
                 {model: Review, attributes: []},
             ],
+            group: ["Spot.id"],
             raw: true
         })
 
