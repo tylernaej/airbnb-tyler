@@ -41,7 +41,7 @@ router.get('/', async(req, res) => {
     });
 
     response.spots = spots
-    res.statusCode(200)
+    res.status(200)
     res.json(response)
 })
 router.get('/current',
@@ -84,7 +84,7 @@ router.get('/current',
         });
 
         response.spots = spots
-        res.statusCode(200)
+        res.status(200)
         res.json(response)
 })
 router.get('/:spotId', async(req, res) => {
@@ -108,7 +108,7 @@ router.get('/:spotId', async(req, res) => {
     });
 
     if(!spot) {
-        res.statusCode(404)
+        res.status(404)
         res.json({
         "message": "Spot couldn't be found",
         "statusCode": 404
@@ -133,7 +133,7 @@ router.get('/:spotId', async(req, res) => {
     })
     spot['Owner'] = owner
 
-    res.statusCode(200)
+    res.status(200)
     res.json(spot)
 });
 const validateSpot = [
@@ -204,7 +204,7 @@ router.post('/',
         })
         await newSpot.save();
 
-        res.statusCode(201)
+        res.status(201)
         res.json(newSpot)
 });
 router.post('/:spotId/images', 
@@ -217,7 +217,7 @@ router.post('/:spotId/images',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot){
-            res.statusCode(404)
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -225,7 +225,7 @@ router.post('/:spotId/images',
         }
         console.log(spot.id, spot.ownerId, user.id)
         if(spot.ownerId !== user.id) {
-            res.statusCode(403)
+            res.status(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -247,7 +247,7 @@ router.post('/:spotId/images',
             response.imageableId = newImage.spotId
             response.url = newImage.url
 
-            res.statusCode(200)
+            res.status(200)
             res.json(response)
         }
 });
@@ -261,7 +261,7 @@ router.put('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
-            res.statusCode(404)
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -269,7 +269,7 @@ router.put('/:spotId',
         }
         
         if(spot.ownerId !== user.id) {
-            res.statusCode(403)
+            res.status(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -301,7 +301,7 @@ router.put('/:spotId',
 
             await spot.save()
             
-            res.statusCode(200)
+            res.status(200)
             res.json(spot)
         }
     }
@@ -314,7 +314,7 @@ router.delete('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
-            res.statusCode(404)
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -322,7 +322,7 @@ router.delete('/:spotId',
         }
 
         if(spot.ownerId !== user.id) {
-            res.statusCode(403)
+            res.status(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -331,7 +331,7 @@ router.delete('/:spotId',
 
         if(spot.ownerId === user.id) {
             await spot.destroy()
-            res.statusCode(200)
+            res.status(200)
             res.json({
                 "message": "Successfully deleted",
                 "statusCode": 200
@@ -344,7 +344,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     
     const spot = await Spot.findByPk(req.params.spotId)
     if(!spot){
-        res.statusCode(404);
+        res.status(404);
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
@@ -388,7 +388,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     })  
 
     response['Reviews'] = reviews
-    res.statusCode(200)
+    res.status(200)
     res.json(response)
 })
 const validateReview = [
@@ -411,7 +411,7 @@ router.post('/:spotId/reviews',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot){
-            res.statusCode(404)
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -427,7 +427,7 @@ router.post('/:spotId/reviews',
 
         spotReviews.forEach(review =>{
             if(review.userId === user.id){
-                res.statusCode(403)
+                res.status(403)
                 return res.json({
                     "message": "User already has a review for this spot",
                     "statusCode": 403
@@ -449,8 +449,62 @@ router.post('/:spotId/reviews',
         })
         
         await newReview.save()
-        res.statusCode(200)
+        res.status(200)
         res.json(spotReviews)
+    }
+)
+router.get('/:spotId/bookings',
+    requireAuth,
+    async (req, res) => {
+        
+        let response = {}
+        const { user } = req
+
+        const spot = await Spot.findByPk(req.params.spotId, {raw: true})
+        const users = await User.findAll({raw: true})
+
+        if(!spot){
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            raw: true
+        })
+
+        if(user.id !== spot['ownerId']){
+            bookings.forEach(booking => {
+                delete booking['id']
+                delete booking['userId']
+                delete booking['createdAt']
+                delete booking['updatedAt']
+            })
+            response['Bookings'] = bookings
+        }
+
+        if(user.id === spot['ownerId']){
+            bookings.forEach(booking => {
+                let bookingInfo = []
+                for(let i = 0; i < users.length; i++){
+                    if(booking['userId'] === users[i].id){
+                        let userObject = {}
+                        delete users[i].username
+                        userObject['User'] = users[i]
+                        bookingInfo.push(userObject)
+                        bookingInfo.push(booking)
+                    }
+                }
+                response['Bookings'] = bookingInfo
+            })
+        }
+        res.status(200)
+        res.send(response)
     }
 )
 
