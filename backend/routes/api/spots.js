@@ -41,7 +41,7 @@ router.get('/', async(req, res) => {
     });
 
     response.spots = spots
-    res.status(200)
+    res.statusCode(200)
     res.json(response)
 })
 router.get('/current',
@@ -84,7 +84,7 @@ router.get('/current',
         });
 
         response.spots = spots
-        res.status(200)
+        res.statusCode(200)
         res.json(response)
 })
 router.get('/:spotId', async(req, res) => {
@@ -108,7 +108,8 @@ router.get('/:spotId', async(req, res) => {
     });
 
     if(!spot) {
-        return res.json({
+        res.statusCode(404)
+        res.json({
         "message": "Spot couldn't be found",
         "statusCode": 404
     })};
@@ -132,7 +133,7 @@ router.get('/:spotId', async(req, res) => {
     })
     spot['Owner'] = owner
 
-    res.status(200)
+    res.statusCode(200)
     res.json(spot)
 });
 const validateSpot = [
@@ -203,7 +204,7 @@ router.post('/',
         })
         await newSpot.save();
 
-        res.status(201)
+        res.statusCode(201)
         res.json(newSpot)
 });
 router.post('/:spotId/images', 
@@ -216,6 +217,7 @@ router.post('/:spotId/images',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot){
+            res.statusCode(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -223,7 +225,7 @@ router.post('/:spotId/images',
         }
         console.log(spot.id, spot.ownerId, user.id)
         if(spot.ownerId !== user.id) {
-            res.status(403)
+            res.statusCode(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -245,7 +247,7 @@ router.post('/:spotId/images',
             response.imageableId = newImage.spotId
             response.url = newImage.url
 
-            res.status(200)
+            res.statusCode(200)
             res.json(response)
         }
 });
@@ -259,6 +261,7 @@ router.put('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
+            res.statusCode(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -266,7 +269,7 @@ router.put('/:spotId',
         }
         
         if(spot.ownerId !== user.id) {
-            res.status(403)
+            res.statusCode(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -298,7 +301,7 @@ router.put('/:spotId',
 
             await spot.save()
             
-            res.status(200)
+            res.statusCode(200)
             res.json(spot)
         }
     }
@@ -311,14 +314,15 @@ router.delete('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
-            return res.json({
+            res.statusCode(404)
+            res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
             })
         }
 
         if(spot.ownerId !== user.id) {
-            res.status(403)
+            res.statusCode(403)
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -326,9 +330,8 @@ router.delete('/:spotId',
         }
 
         if(spot.ownerId === user.id) {
-            console.log('--------------------------------------')
             await spot.destroy()
-            res.status(200)
+            res.statusCode(200)
             res.json({
                 "message": "Successfully deleted",
                 "statusCode": 200
@@ -341,7 +344,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     
     const spot = await Spot.findByPk(req.params.spotId)
     if(!spot){
-        res.status(404);
+        res.statusCode(404);
         res.json({
             "message": "Spot couldn't be found",
             "statusCode": 404
@@ -385,7 +388,7 @@ router.get('/:spotId/reviews', async (req, res) => {
     })  
 
     response['Reviews'] = reviews
-    res.status(200)
+    res.statusCode(200)
     res.json(response)
 })
 const validateReview = [
@@ -408,8 +411,8 @@ router.post('/:spotId/reviews',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot){
-            res.status(404)
-            return res.json({
+            res.statusCode(404)
+            res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
               })
@@ -424,7 +427,7 @@ router.post('/:spotId/reviews',
 
         spotReviews.forEach(review =>{
             if(review.userId === user.id){
-                res.status(403)
+                res.statusCode(403)
                 return res.json({
                     "message": "User already has a review for this spot",
                     "statusCode": 403
@@ -446,8 +449,8 @@ router.post('/:spotId/reviews',
         })
         
         await newReview.save()
-        res.status(200)
-        res.send(spotReviews)
+        res.statusCode(200)
+        res.json(spotReviews)
     }
 )
 

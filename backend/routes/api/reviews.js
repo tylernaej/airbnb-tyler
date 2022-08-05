@@ -61,7 +61,7 @@ router.get('/current',
         })
 
         response['Reviews'] = reviews
-        res.status(200)
+        res.statusCode(200)
         res.json(response)
     }
 );
@@ -81,7 +81,7 @@ router.post('/:reviewId/images',
         })
 
         if(reviewImages.length > 9) {
-            res.status(403);
+            res.statusCode(403);
             res.json({
                 "message": "Maximum number of images for this resource was reached",
                 "statusCode": 403
@@ -89,7 +89,7 @@ router.post('/:reviewId/images',
         }
 
         if(review.userId !== user.id){
-            res.status(403);
+            res.statusCode(403);
             res.json({
                 "message": "Forbidden",
                 "statusCode": 403
@@ -97,7 +97,7 @@ router.post('/:reviewId/images',
         }
 
         if(!review){
-            res.status(404)
+            res.statusCode(404)
             res.json({
                 "message": "Review couldn't be found",
                 "statusCode": 404
@@ -123,7 +123,82 @@ router.post('/:reviewId/images',
         response['imageableId'] = review.id
         response['url'] = newImage.url
 
-        res.send(response)
+        res.statusCode(200)
+        res.json(response)
+    }
+)
+router.put('/:reviewId',
+    requireAuth,
+    async (req, res) => {
+
+        const { user } = req;
+
+        const reviewToEdit = await Review.findByPk(req.params.reviewId, {
+            raw: true
+        })
+
+        if(!reviewToEdit) {
+            res.statusCode(404);
+            res.json({
+                "message": "Review couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        if(reviewToEdit.userId !== user.id){
+            res.statusCode(403);
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+
+        const {
+            review,
+            stars
+        } = req.body
+
+        if(reviewToEdit.userId === user.id) {
+            reviewToEdit.review = review,
+            reviewToEdit.stars = stars
+        }
+
+        res.statusCode(200)
+        res.json(reviewToEdit)
+    }
+)
+router.delete('/:reviewId',
+    requireAuth,
+    async (req, res) => {
+
+        const { user } = req
+
+        const reviewToDelete = await Review.findByPk(req.params.reviewId)
+
+        if(!reviewToDelete){
+            res.statusCode(404);
+            res.json({
+                "message": "Review couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        if(reviewToDelete.userId !== user.id){
+            res.statusCode(403);
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+        if(reviewToDelete.userId === user.id){
+            await reviewToDelete.destroy()
+            res.statusCode(200)
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+              })
+        }
+
     }
 )
 
