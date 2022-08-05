@@ -118,10 +118,10 @@ router.put('/:bookingId',
             let existingStartDateParsed = Date.parse(existingBooking.startDate)
             let existingEndDateParsed = Date.parse(existingBooking.endDate)
             if(
-                (startDateParsed > existingStartDateParsed && 
-                startDateParsed < existingEndDateParsed) ||
-                (endDateParsed > existingStartDateParsed &&
-                endDateParsed < existingEndDateParsed)
+                (startDateParsed >= existingStartDateParsed && 
+                startDateParsed <= existingEndDateParsed) ||
+                (endDateParsed >= existingStartDateParsed &&
+                endDateParsed <= existingEndDateParsed)
             ) {
                 res.status(403)
                 res.json({
@@ -145,6 +145,48 @@ router.put('/:bookingId',
         res.status(200)
         res.json(existingSpotBookings)
     }
+)
+router.delete('/:bookingId',
+    requireAuth,
+    async (req, res) => {
+
+        const { user } = req;
+        const booking = await Booking.findByPk(req.params.bookingId)
+
+        if(!booking) {
+            res.status(404)
+            res.json({
+                "message": "Booking couldn't be found",
+                "statusCode": 404
+            })
+        }
+   
+
+        if(booking.userId !== user.id) {
+            res.status(403)
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+
+        if(Date.parse(booking['startDate']) < Date.parse(new Date())){
+            res.status(403)
+            res.json({
+                "message": "Bookings that have been started can't be deleted",
+                "statusCode": 403
+              })
+        }
+
+        if(booking.userId === user.id) {
+            await booking.destroy()
+            res.status(200)
+            res.json({
+                "message": "Successfully deleted",
+                "statusCode": 200
+              })
+        }
+    } 
 )
 
 module.exports = router;

@@ -564,10 +564,10 @@ router.post('/:spotId/bookings',
             let existingStartDateParsed = Date.parse(existingBooking.startDate)
             let existingEndDateParsed = Date.parse(existingBooking.endDate)
             if(
-                (startDateParsed > existingStartDateParsed && 
-                startDateParsed < existingEndDateParsed) ||
-                (endDateParsed > existingStartDateParsed &&
-                endDateParsed < existingEndDateParsed)
+                (startDateParsed >= existingStartDateParsed && 
+                startDateParsed <= existingEndDateParsed) ||
+                (endDateParsed >= existingStartDateParsed &&
+                endDateParsed <= existingEndDateParsed)
                 ) {
                     res.status(403)
                     res.json({
@@ -581,16 +581,15 @@ router.post('/:spotId/bookings',
                 }
             })
                     
-            const newBooking = Booking.create({
+            const newBooking = Booking.build({
                 spotId: spot.id,
                 userId: user.id,
                 startDate,
                 endDate
             })
             
-            console.log(newBooking)
 
-            // await newBooking.save()
+            await newBooking.save()
 
         res.status(200)
         res.json(newBooking)

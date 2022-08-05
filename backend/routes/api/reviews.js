@@ -73,11 +73,22 @@ router.post('/:reviewId/images',
 
         const review = await Review.findByPk(req.params.reviewId)
 
-        const reviewImages = await Image.findAll({
-            where: {
-                reviewId: review.id
-            },
-            raw: true
+        if(!review){
+            res.status(404)
+            res.json({
+                "message": "Review couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        const images = await Image.findAll({raw: true})
+        
+        let reviewImages = []
+        
+        images.forEach(image => {
+            if(req.params.reviewId === image.reviewId){
+                reviewImages.push(image)
+            }
         })
 
         if(reviewImages.length > 9) {
@@ -96,13 +107,6 @@ router.post('/:reviewId/images',
               })
         }
 
-        if(!review){
-            res.status(404)
-            res.json({
-                "message": "Review couldn't be found",
-                "statusCode": 404
-              })
-        }
 
         const {
             url,
