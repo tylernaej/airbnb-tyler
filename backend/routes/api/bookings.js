@@ -124,7 +124,7 @@ router.put('/:bookingId',
                 endDateParsed <= existingEndDateParsed)
             ) {
                 res.status(403)
-                res.json({
+                return res.json({
                     "message": "Sorry, this spot is already booked for the specified dates",
                     "statusCode": 403,
                     "errors": {
@@ -143,7 +143,7 @@ router.put('/:bookingId',
         await booking.save()
 
         res.status(200)
-        res.json(existingSpotBookings)
+        res.json(booking)
     }
 )
 router.delete('/:bookingId',
