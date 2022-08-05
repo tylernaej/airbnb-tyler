@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Sequelize
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
@@ -20,14 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
-      validate: {
-        isAfter: new Date()
-      }
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     createdAt: {

@@ -108,7 +108,8 @@ router.get('/:spotId', async(req, res) => {
     });
 
     if(!spot) {
-        return res.json({
+        res.status(404)
+        res.json({
         "message": "Spot couldn't be found",
         "statusCode": 404
     })};
@@ -216,6 +217,7 @@ router.post('/:spotId/images',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot){
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -259,6 +261,7 @@ router.put('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
+            res.status(404)
             res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
@@ -311,7 +314,8 @@ router.delete('/:spotId',
         const spot = await Spot.findByPk(req.params.spotId)
 
         if(!spot) {
-            return res.json({
+            res.status(404)
+            res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
             })
@@ -326,7 +330,6 @@ router.delete('/:spotId',
         }
 
         if(spot.ownerId === user.id) {
-            console.log('--------------------------------------')
             await spot.destroy()
             res.status(200)
             res.json({
@@ -409,7 +412,7 @@ router.post('/:spotId/reviews',
 
         if(!spot){
             res.status(404)
-            return res.json({
+            res.json({
                 "message": "Spot couldn't be found",
                 "statusCode": 404
               })
@@ -447,7 +450,149 @@ router.post('/:spotId/reviews',
         
         await newReview.save()
         res.status(200)
-        res.send(spotReviews)
+        res.json(newReview)
+    }
+)
+router.get('/:spotId/bookings',
+    requireAuth,
+    async (req, res) => {
+        
+        let response = {}
+        const { user } = req
+
+        const spot = await Spot.findByPk(req.params.spotId, {raw: true})
+        const users = await User.findAll({raw: true})
+
+        if(!spot){
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            raw: true
+        })
+
+        if(user.id !== spot['ownerId']){
+            bookings.forEach(booking => {
+                delete booking['id']
+                delete booking['userId']
+                delete booking['createdAt']
+                delete booking['updatedAt']
+            })
+            response['Bookings'] = bookings
+        }
+
+        if(user.id === spot['ownerId']){
+            bookings.forEach(booking => {
+                let bookingInfo = []
+                for(let i = 0; i < users.length; i++){
+                    if(booking['userId'] === users[i].id){
+                        let userObject = {}
+                        delete users[i].username
+                        userObject['User'] = users[i]
+                        bookingInfo.push(userObject)
+                        bookingInfo.push(booking)
+                    }
+                }
+                response['Bookings'] = bookingInfo
+            })
+        }
+        res.status(200)
+        res.send(response)
+    }
+)
+const validateBooking = [
+    check('startDate')
+        .exists({checkFalsy: true})
+        .withMessage('startDate must exist'),
+    check('endDate')
+        .exists({checkFalsy: true})
+        .custom((value, { req }) => {
+            if(new Date(value) <= new Date(req.body.startDate)) {
+                throw new Error;
+            }
+            return true;
+        })
+        .withMessage('endDate cannot be on or before startDate'),
+    handleValidationErrors
+]
+router.post('/:spotId/bookings',
+    requireAuth,
+    validateBooking,
+    async (req, res) => {
+        const { user } = req
+        
+        const spot = await Spot.findByPk(req.params.spotId, {raw: true})
+        
+        if(!spot){
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            })
+        }
+        
+        if(spot.ownerId === user.id){
+            res.status(403)
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+            })
+        }
+        
+        const existingSpotBookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            raw: true
+        })
+        
+        const {
+            startDate,
+            endDate
+        } = req.body
+        
+        existingSpotBookings.forEach(existingBooking => {
+            let startDateParsed = Date.parse(startDate)
+            let endDateParsed = Date.parse(endDate)
+            let existingStartDateParsed = Date.parse(existingBooking.startDate)
+            let existingEndDateParsed = Date.parse(existingBooking.endDate)
+            if(
+                (startDateParsed >= existingStartDateParsed && 
+                startDateParsed <= existingEndDateParsed) ||
+                (endDateParsed >= existingStartDateParsed &&
+                endDateParsed <= existingEndDateParsed)
+                ) {
+                    res.status(403)
+                    res.json({
+                        "message": "Sorry, this spot is already booked for the specified dates",
+                        "statusCode": 403,
+                        "errors": {
+                            "startDate": "Start date conflicts with an existing booking",
+                            "endDate": "End date conflicts with an existing booking"
+                        }
+                    })
+                }
+            })
+                    
+            const newBooking = Booking.build({
+                spotId: spot.id,
+                userId: user.id,
+                startDate,
+                endDate
+            })
+            
+
+            await newBooking.save()
+
+        res.status(200)
+        res.json(newBooking)
     }
 )
 
