@@ -408,19 +408,9 @@ router.post('/:spotId/reviews',
 
         const { user } = req;
 
-        const spot = await Spot.findByPk(req.params.spotId)
-
-        if(!spot){
-            res.status(404)
-            res.json({
-                "message": "Spot couldn't be found",
-                "statusCode": 404
-              })
-        }
-
         const spotReviews = await Review.findAll({
             where: {
-                spotId: spot.id
+                spotId: req.params.spotId
             },
             raw: true
         })
@@ -433,8 +423,17 @@ router.post('/:spotId/reviews',
                     "statusCode": 403
                   })
             }
-            console.log(review.id)
         })
+
+        const spot = await Spot.findByPk(req.params.spotId)
+
+        if(!spot){
+            res.status(404)
+            res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              })
+        }
 
         const {
             review,
