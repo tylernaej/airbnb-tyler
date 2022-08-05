@@ -5,6 +5,7 @@ const { handleValidationErrors } = require('../../utils/validation')
 const { requireAuth } = require('../../utils/auth')
 const {Booking, Image, Review, Spot, User, sequelize} = require('../../db/models');
 const { response } = require('express');
+const review = require('../../db/models/review');
 
 router.get('/', async(req, res) => {
     
@@ -134,7 +135,7 @@ router.get('/:spotId', async(req, res) => {
     res.status(200)
     res.json(spot)
 });
-const validateReview = [
+const validateSpot = [
     check('address')
         .exists({checkFalsy: true})
         .isLength({min: 2})
@@ -173,7 +174,7 @@ const validateReview = [
 ]
 router.post('/',
     requireAuth,
-    validateReview,
+    validateSpot,
     async (req, res) => {
 
         const { user } = req;
@@ -250,7 +251,7 @@ router.post('/:spotId/images',
 });
 router.put('/:spotId',
     requireAuth,
-    validateReview,
+    validateSpot,
     async (req, res) => {
 
         const { user } = req;
@@ -334,6 +335,120 @@ router.delete('/:spotId',
               })
         }
     }    
+)
+router.get('/:spotId/reviews', async (req, res) => {
+    let response = {}
+    
+    const spot = await Spot.findByPk(req.params.spotId)
+    if(!spot){
+        res.status(404);
+        res.json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+          })
+    }
+
+    const reviews = await Review.findAll({
+        where:{
+            spotId: req.params.spotId
+        },
+        raw: true
+    })
+
+    const users = await User.findAll({
+        attributes: ['id','firstName','lastName'],
+        raw: true
+    })
+    reviews.forEach(review => {
+        for(let i = 0; i < users.length; i++) {
+            if(review['userId'] === users[i].id){
+                review['User'] = users[i]
+            }
+        }
+    })
+
+    const images = await Image.findAll({
+        attributes: ['id','reviewId','url'],
+        raw: true
+    })  
+    reviews.forEach(review => {
+        for(let i = 0; i < images.length; i++) {
+            if(review['id'] === images[i].reviewId){
+                let imageObject = {}
+                imageObject['id'] = images[i].id
+                imageObject['imageableId'] = review['id']
+                imageObject['url'] = images[i].url
+                console.log(imageObject)
+                review['Images'] = imageObject               
+            }
+        }
+    })  
+
+    response['Reviews'] = reviews
+    res.status(200)
+    res.json(response)
+})
+const validateReview = [
+    check('review')
+        .exists({checkFalsy: true})
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({checkFalsy: true})
+        .isInt({min: 1, max: 5})
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
+router.post('/:spotId/reviews',
+    requireAuth,
+    validateReview,
+    async (req, res) => {
+
+        const { user } = req;
+
+        const spot = await Spot.findByPk(req.params.spotId)
+
+        if(!spot){
+            res.status(404)
+            return res.json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+              })
+        }
+
+        const spotReviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            },
+            raw: true
+        })
+
+        spotReviews.forEach(review =>{
+            if(review.userId === user.id){
+                res.status(403)
+                return res.json({
+                    "message": "User already has a review for this spot",
+                    "statusCode": 403
+                  })
+            }
+            console.log(review.id)
+        })
+
+        const {
+            review,
+            stars
+        } = req.body
+
+        const newReview = Review.build({
+            review,
+            stars,
+            userId: user.id,
+            spotId: spot.id
+        })
+        
+        await newReview.save()
+        res.status(200)
+        res.send(spotReviews)
+    }
 )
 
 module.exports = router;

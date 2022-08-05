@@ -58,11 +58,12 @@ router.get('/current',
                 }
             }
         })
-        response['Reviews'] = reviews
 
-        res.send(response)
+        response['Reviews'] = reviews
+        res.status(200)
+        res.json(response)
     }
-    )
+);
 
 
 module.exports = router;
