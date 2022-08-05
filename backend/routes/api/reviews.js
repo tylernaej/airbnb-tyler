@@ -134,7 +134,7 @@ router.put('/:reviewId',
         const { user } = req;
 
         const reviewToEdit = await Review.findByPk(req.params.reviewId, {
-            raw: true
+            // raw: true
         })
 
         if(!reviewToEdit) {
@@ -159,8 +159,11 @@ router.put('/:reviewId',
         } = req.body
 
         if(reviewToEdit.userId === user.id) {
-            reviewToEdit.review = review,
-            reviewToEdit.stars = stars
+            reviewToEdit.update({
+                review: review,
+                stars: stars
+            })
+            // await reviewToEdit.save()
         }
 
         res.status(200)

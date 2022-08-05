@@ -52,5 +52,99 @@ router.get('/current',
         res.json(response)
     }
 )
+const validateBooking = [
+    check('startDate')
+        .exists({checkFalsy: true})
+        .withMessage('startDate must exist'),
+    check('endDate')
+        .exists({checkFalsy: true})
+        .custom((value, { req }) => {
+            if(new Date(value) <= new Date(req.body.startDate)) {
+                throw new Error;
+            }
+            return true;
+        })
+        .withMessage('endDate cannot be on or before startDate'),
+    handleValidationErrors
+]
+router.put('/:bookingId',
+    requireAuth,
+    validateBooking,
+    async (req, res) => {
+
+        const { user } = req;
+
+        const booking = await Booking.findByPk(req.params.bookingId)
+
+        if(!booking){
+            res.status(404)
+            res.json({
+                "message": "Booking couldn't be found",
+                "statusCode": 404
+            })
+        }
+
+        if(booking.userId !== user.id){
+            res.status(403)
+            res.json({
+                "message": "Forbidden",
+                "statusCode": 403
+              })
+        }
+
+        const {
+            startDate,
+            endDate
+        } = req.body
+
+        if(Date.parse(endDate) < Date.parse(new Date())){
+            res.status(403),
+            res.json({
+                "message": "Past bookings can't be modified",
+                "statusCode": 403
+              })
+        }
+        
+        const existingSpotBookings = await Booking.findAll({
+            where: {
+                spotId: booking['spotId']
+            },
+            raw: true
+        })
+
+        existingSpotBookings.forEach(existingBooking => {
+            let startDateParsed = Date.parse(startDate)
+            let endDateParsed = Date.parse(endDate)
+            let existingStartDateParsed = Date.parse(existingBooking.startDate)
+            let existingEndDateParsed = Date.parse(existingBooking.endDate)
+            if(
+                (startDateParsed > existingStartDateParsed && 
+                startDateParsed < existingEndDateParsed) ||
+                (endDateParsed > existingStartDateParsed &&
+                endDateParsed < existingEndDateParsed)
+            ) {
+                res.status(403)
+                res.json({
+                    "message": "Sorry, this spot is already booked for the specified dates",
+                    "statusCode": 403,
+                    "errors": {
+                      "startDate": "Start date conflicts with an existing booking",
+                      "endDate": "End date conflicts with an existing booking"
+                    }
+                  })
+            }
+        })
+        
+        booking.set({
+            startDate: startDate,
+            endDate: endDate
+        })
+        
+        await booking.save()
+
+        res.status(200)
+        res.json(existingSpotBookings)
+    }
+)
 
 module.exports = router;
