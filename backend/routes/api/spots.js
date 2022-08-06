@@ -6,23 +6,63 @@ const { requireAuth } = require('../../utils/auth')
 const {Booking, Image, Review, Spot, User, sequelize} = require('../../db/models');
 const { response } = require('express');
 const review = require('../../db/models/review');
+const { Op } = require('sequelize')
 
 router.get('/', async(req, res) => {
     
     const response = {}
+    const where = {}
+
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    
+    if(minLat) where['lat'] = {[Op.gt]: minLat}
+    if(maxLat) where['lat'] = {[Op.lt]: maxLat}
+    if(minLng) where['lng'] = {[Op.gt]: minLng}
+    if(maxLng) where['lng'] = {[Op.lt]: maxLng}
+    if(minPrice) where['price'] = {[Op.gt]: minPrice}
+    if(maxPrice) where['price'] = {[Op.lt]: maxPrice}
+
+    page = parseInt(page);
+    size = parseInt(size);
+  
+    if (Number.isNaN(page)) page = 0;
+    if (Number.isNaN(size)) size = 20;
+    if (minPrice < 0) minPrice = 0;
+    if (maxPrice < 0) maxPrice = 0
+
+    const pagination = {}
+
+    if (page >= 1 && size === 0){
+        size = 20
+    }
+    if (page >= 1 && size >= 1) {
+        pagination.limit = size
+        pagination.offset = size * (page-1)
+    }
 
     const spots = await Spot.findAll({
-        attributes: {
-            include: [[sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-            "avgRating"],
-        ]},
-        include: 
-        [
-            {model: Review, attributes: []}, 
-        ],
-        group: ["Spot.id"],
-        raw: true
+        where,
+        raw: true,
+        ...pagination
     });
+
+    const reviews = await Review.findAll({raw:true})
+
+    spots.forEach(spot => {
+        let spotRatings = 0
+        let count = 0
+        for (let i = 0; i < reviews.length; i++){
+            console.log(spot.id, reviews[i].spotId)
+            if(spot.id === reviews[i].spotId) {
+                spotRatings += reviews[i].stars 
+                count++
+            }
+        }
+        console.log(spotRatings,count)
+        if(spotRatings > 0) {
+            spot['avgRating'] = spotRatings/count
+        }
+    })
 
     const images = await Image.findAll({
         where: {
@@ -446,8 +486,8 @@ router.post('/:spotId/reviews',
             userId: user.id,
             spotId: spot.id
         })
-        
         await newReview.save()
+
         res.status(200)
         res.json(newReview)
     }
