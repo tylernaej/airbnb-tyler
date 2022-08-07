@@ -143,7 +143,7 @@ router.put('/:bookingId',
         await booking.save()
 
         res.status(200)
-        res.json(existingSpotBookings)
+        res.json(booking)
     }
 )
 router.delete('/:bookingId',

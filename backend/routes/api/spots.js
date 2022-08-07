@@ -455,8 +455,10 @@ router.post('/:spotId/reviews',
             raw: true
         })
 
+        let reviewConflict = false
         spotReviews.forEach(review =>{
             if(review.userId === user.id){
+                reviewConflict = true
                 res.status(403)
                 return res.json({
                     "message": "User already has a review for this spot",
@@ -480,13 +482,16 @@ router.post('/:spotId/reviews',
             stars
         } = req.body
 
-        const newReview = Review.build({
-            review,
-            stars,
-            userId: user.id,
-            spotId: spot.id
-        })
-        await newReview.save()
+        let newReview
+        if(!reviewConflict){
+            newReview = Review.build({
+                review,
+                stars,
+                userId: user.id,
+                spotId: spot.id
+            })
+            await newReview.save()
+        }
 
         res.status(200)
         res.json(newReview)
@@ -565,10 +570,12 @@ router.post('/:spotId/bookings',
     requireAuth,
     validateBooking,
     async (req, res) => {
+
+        //getting active user from requireAuth
         const { user } = req
-        
+        //get spot to create the booking for
         const spot = await Spot.findByPk(req.params.spotId, {raw: true})
-        
+        //check to see if spotId is valid
         if(!spot){
             res.status(404)
             res.json({
@@ -576,7 +583,7 @@ router.post('/:spotId/bookings',
                 "statusCode": 404
             })
         }
-        
+        //check to see if the active user is booking the spot they own
         if(spot.ownerId === user.id){
             res.status(403)
             res.json({
@@ -584,19 +591,22 @@ router.post('/:spotId/bookings',
                 "statusCode": 403
             })
         }
-        
+        //finds all the active bookings for the spot.
         const existingSpotBookings = await Booking.findAll({
             where: {
                 spotId: spot.id
             },
             raw: true
         })
-        
+        //getting the info from the user about when they would like to book the spot.
         const {
             startDate,
             endDate
         } = req.body
-        
+        //checks all active bookings, and it there is an active booking during the dates the user wants to book,
+        //it will return an error.
+        let bookingConflict = false
+
         existingSpotBookings.forEach(existingBooking => {
             let startDateParsed = Date.parse(startDate)
             let endDateParsed = Date.parse(endDate)
@@ -608,6 +618,7 @@ router.post('/:spotId/bookings',
                 (endDateParsed >= existingStartDateParsed &&
                 endDateParsed <= existingEndDateParsed)
                 ) {
+                    bookingConflict = true
                     res.status(403)
                     res.json({
                         "message": "Sorry, this spot is already booked for the specified dates",
@@ -619,17 +630,19 @@ router.post('/:spotId/bookings',
                     })
                 }
             })
-                    
-            const newBooking = Booking.build({
-                spotId: spot.id,
-                userId: user.id,
-                startDate,
-                endDate
-            })
-            
-
-            await newBooking.save()
-
+            //if there is not booking conflict, create a new booking for the user submitted dates.
+            let newBooking
+            if(!bookingConflict)  {
+                newBooking = Booking.build({
+                    spotId: spot.id,
+                    userId: user.id,
+                    startDate,
+                    endDate
+                })
+                //save the booking in the db
+                await newBooking.save()
+            }      
+        //return the confirmed booking info back to the user.
         res.status(200)
         res.json(newBooking)
     }
