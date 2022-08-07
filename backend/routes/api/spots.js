@@ -58,7 +58,7 @@ router.get('/', async(req, res) => {
                 count++
             }
         }
-        console.log(spotRatings,count)
+
         if(spotRatings > 0) {
             spot['avgRating'] = spotRatings/count
         }
@@ -217,8 +217,9 @@ router.post('/',
     requireAuth,
     validateSpot,
     async (req, res) => {
-
+        //get user info from req
         const { user } = req;
+        
         const {
             address,
             city,
@@ -250,12 +251,11 @@ router.post('/',
 router.post('/:spotId/images', 
     requireAuth,
     async (req, res) => {
-        
+        //grab the user info and new image info from req
         const { user } = req;
         const { url, previewImage} = req.body
-        
+        //grab the spot and check if it exists
         const spot = await Spot.findByPk(req.params.spotId)
-
         if(!spot){
             res.status(404)
             res.json({
@@ -263,7 +263,7 @@ router.post('/:spotId/images',
                 "statusCode": 404
               })
         }
-        console.log(spot.id, spot.ownerId, user.id)
+        //validate ownership and if not owner, send error
         if(spot.ownerId !== user.id) {
             res.status(403)
             res.json({
@@ -271,8 +271,11 @@ router.post('/:spotId/images',
                 "statusCode": 403
               })
         }
+        //if active user is owner, prep a response obejct and create
+        //a new image with the image info provided. Because this is
+        //an image for a spot, reviewId is null
+        let response = {}
         if(spot.ownerId === user.id) {
-            let response = {}
             
             const newImage = Image.build({
                 url,
@@ -283,6 +286,7 @@ router.post('/:spotId/images',
             })
             await newImage.save()
 
+            //add image info into response object to send
             response.id = newImage.id
             response.imageableId = newImage.spotId
             response.url = newImage.url
@@ -295,11 +299,10 @@ router.put('/:spotId',
     requireAuth,
     validateSpot,
     async (req, res) => {
-
+        //get the user info from req
         const { user } = req;
-
+        //grab the spot and check if it is a valid id
         const spot = await Spot.findByPk(req.params.spotId)
-
         if(!spot) {
             res.status(404)
             res.json({
@@ -307,7 +310,7 @@ router.put('/:spotId',
                 "statusCode": 404
             })
         }
-        
+        //validate ownership and send error if not owner
         if(spot.ownerId !== user.id) {
             res.status(403)
             res.json({
@@ -315,7 +318,7 @@ router.put('/:spotId',
                 "statusCode": 403
               })
         }
-
+        //get submitted info for edit of spot
         const {
             address,
             city,
@@ -327,7 +330,8 @@ router.put('/:spotId',
             description,
             price
         } = req.body
-
+        //if the owner is the active user, edit the spot info
+        //with the new info submitted by the owner, save and send
         if(spot.ownerId === user.id){
             spot.address = address,
             spot.city = city,
@@ -349,10 +353,10 @@ router.put('/:spotId',
 router.delete('/:spotId',
     requireAuth,
     async (req, res) => {
-
+        //get the user info from req
         const { user } = req;
+        //get the spot by id and send error if doesn't exist
         const spot = await Spot.findByPk(req.params.spotId)
-
         if(!spot) {
             res.status(404)
             res.json({
@@ -360,7 +364,7 @@ router.delete('/:spotId',
                 "statusCode": 404
             })
         }
-
+        //validate ownership and send error if not owner
         if(spot.ownerId !== user.id) {
             res.status(403)
             res.json({
@@ -368,7 +372,7 @@ router.delete('/:spotId',
                 "statusCode": 403
               })
         }
-
+        //validate ownership and if owner, delete spot
         if(spot.ownerId === user.id) {
             await spot.destroy()
             res.status(200)
@@ -380,8 +384,9 @@ router.delete('/:spotId',
     }    
 )
 router.get('/:spotId/reviews', async (req, res) => {
+    //create a response object to populate
     let response = {}
-    
+    //get the spot by id and send error if there is no such spot.
     const spot = await Spot.findByPk(req.params.spotId)
     if(!spot){
         res.status(404);
@@ -390,14 +395,15 @@ router.get('/:spotId/reviews', async (req, res) => {
             "statusCode": 404
           })
     }
-
+    //get all the reviews associated to the spot
     const reviews = await Review.findAll({
         where:{
             spotId: req.params.spotId
         },
         raw: true
     })
-
+    //get all users info, then check each review to add the user info 
+    //to that review.
     const users = await User.findAll({
         attributes: ['id','firstName','lastName'],
         raw: true
@@ -409,7 +415,8 @@ router.get('/:spotId/reviews', async (req, res) => {
             }
         }
     })
-
+    //get all image info, then check each review to add the image 
+    //info to that review
     const images = await Image.findAll({
         attributes: ['id','reviewId','url'],
         raw: true
@@ -426,7 +433,8 @@ router.get('/:spotId/reviews', async (req, res) => {
             }
         }
     })  
-
+    //add all the review info to the response object and 
+    //give it a key of 'Reviews'
     response['Reviews'] = reviews
     res.status(200)
     res.json(response)
@@ -445,17 +453,23 @@ router.post('/:spotId/reviews',
     requireAuth,
     validateReview,
     async (req, res) => {
-
+        //get user info from req
         const { user } = req;
-
+        //get all the reviews associated to the spot Id
         const spotReviews = await Review.findAll({
             where: {
                 spotId: req.params.spotId
             },
             raw: true
         })
-
+        //sets a variable switch outside of loop to use check if a
+        //conflict was found. This is to prevent a user from making
+        //multiple reviews.
         let reviewConflict = false
+        //looks are each spot to check if the user has already submitted
+        //a review for that spot; if they have, return an error message and
+        //update the reviewConflict variable to true, to indicate later
+        //that there should not be a review created. 
         spotReviews.forEach(review =>{
             if(review.userId === user.id){
                 reviewConflict = true
@@ -466,9 +480,8 @@ router.post('/:spotId/reviews',
                   })
             }
         })
-
+        //checks to see if the spotId was valid
         const spot = await Spot.findByPk(req.params.spotId)
-
         if(!spot){
             res.status(404)
             res.json({
@@ -476,12 +489,13 @@ router.post('/:spotId/reviews',
                 "statusCode": 404
               })
         }
-
+        //if the spotId was valid and the user does not already have
+        //a review, create one and save it.
         const {
             review,
             stars
         } = req.body
-
+        //new review declared outside of if to get access to later
         let newReview
         if(!reviewConflict){
             newReview = Review.build({
@@ -492,7 +506,7 @@ router.post('/:spotId/reviews',
             })
             await newReview.save()
         }
-
+        //send newReview if one is created
         res.status(200)
         res.json(newReview)
     }
@@ -500,13 +514,14 @@ router.post('/:spotId/reviews',
 router.get('/:spotId/bookings',
     requireAuth,
     async (req, res) => {
-        
+        //prep response object to add to    
         let response = {}
+        //get user info from req
         const { user } = req
-
+        //get the spot by id and get all users
         const spot = await Spot.findByPk(req.params.spotId, {raw: true})
         const users = await User.findAll({raw: true})
-
+        //if spot Id was invalid, send error
         if(!spot){
             res.status(404)
             res.json({
@@ -514,14 +529,17 @@ router.get('/:spotId/bookings',
                 "statusCode": 404
               })
         }
-
+        //get all bookings from the active spot
         const bookings = await Booking.findAll({
             where: {
                 spotId: spot.id
             },
             raw: true
         })
-
+        //check to see if is user is the owner of the spot
+        //if not, the user will see a limited view of the bookings
+        //associated to that spot, so details are deleted prior
+        //to being added to the response object.
         if(user.id !== spot['ownerId']){
             bookings.forEach(booking => {
                 delete booking['id']
@@ -529,9 +547,12 @@ router.get('/:spotId/bookings',
                 delete booking['createdAt']
                 delete booking['updatedAt']
             })
+            //add the new edited bookings to the response object
             response['Bookings'] = bookings
         }
-
+        //checks to see if the active user is the owner of the spot,
+        //then adds details to the each booking before adding 
+        //the bookings to the response object.
         if(user.id === spot['ownerId']){
             bookings.forEach(booking => {
                 let bookingInfo = []
@@ -547,6 +568,7 @@ router.get('/:spotId/bookings',
                 response['Bookings'] = bookingInfo
             })
         }
+        //send response object
         res.status(200)
         res.send(response)
     }
