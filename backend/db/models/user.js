@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             username: credential,
             email: credential
           }
-        }
+        },
       });
       if (user && user.validatePassword(password)) {
         return await User.scope('currentUser').findByPk(user.id);
