@@ -41,12 +41,16 @@ router.post(
         return next(err);
       }
   
-      await setTokenCookie(res, user);
+      const token = await setTokenCookie(res, user);
       if(user){
         res.status(200)
       }
+
+      let userObject = user.dataValues
+      userObject['token'] = token
+      console.log(userObject)
       return res.json({
-        user
+        userObject
       });
     }
   );
@@ -77,7 +81,4 @@ router.get(
   }
 );
 
-// ...
-
-// ...
 module.exports = router;
