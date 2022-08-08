@@ -24,7 +24,7 @@ const validateLogin = [
   handleValidationErrors
 ];
 
-// Log in
+// Log in 
 router.post(
     '/',
     validateLogin,
@@ -48,14 +48,12 @@ router.post(
 
       let userObject = user.dataValues
       userObject['token'] = token
-      console.log(userObject)
       return res.json({
         userObject
       });
     }
   );
-
-  // Log out
+// Log out
 router.delete(
   '/',
   (_req, res) => {
