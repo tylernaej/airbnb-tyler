@@ -84,6 +84,14 @@ app.use(
         }
       })
     }
+    if(err.errors[0] === 'The provided credentials were invalid.') {
+      res.status(401)
+      return res.json({
+        "message": "Invalid credentials",
+        "statusCode": 401
+      })
+    }
+    console.log(err.errors[0])
     res.status(err.status || 500);
     res.json({
       // title: err.title || 'Server Error',
