@@ -60,7 +60,7 @@ router.post(
           })
         }
       });
-  
+      
       await setTokenCookie(res, user);
 
       delete user.createdAt
