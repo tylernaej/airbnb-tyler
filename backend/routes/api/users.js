@@ -43,6 +43,9 @@ router.post(
       const user = await User.signup({ firstName, lastName, email, username, password });
   
       await setTokenCookie(res, user);
+
+      delete user.createdAt
+      delete user.updatedAt
   
       return res.json({
         user
