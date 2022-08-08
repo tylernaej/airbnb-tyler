@@ -74,8 +74,17 @@ app.use(
 
   // Error formatter
   app.use((err, _req, res, _next) => {
+    if(err.errors[0] === 'email must be unique') {
+      res.status(403)
+      return res.json({
+        "message": "User already exists",
+        "statusCode": 403,
+        "errors": {
+          "email": "User with that email already exists"
+        }
+      })
+    }
     res.status(err.status || 500);
-    console.error(err);
     res.json({
       // title: err.title || 'Server Error',
       message: err.message,
