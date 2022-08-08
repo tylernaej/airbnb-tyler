@@ -80,7 +80,7 @@ app.use(
       message: err.message,
       statusCode: err.status,
       errors: err.errors,
-      stack: isProduction ? null : err.stack
+      // stack: isProduction ? null : err.stack
     });
   });
 
