@@ -1,17 +1,11 @@
 // backend/routes/api/session.js
 const express = require('express')
-
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
-
 const router = express.Router();
-
-// ...
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-// ...
-// backend/routes/api/session.js
-// ...
+
 
 const validateLogin = [
   check('credential')
@@ -23,7 +17,6 @@ const validateLogin = [
     .withMessage('Please provide a password.'),
   handleValidationErrors
 ];
-
 // Log in 
 router.post(
     '/',
@@ -52,7 +45,7 @@ router.post(
         userObject
       });
     }
-  );
+);
 // Log out
 router.delete(
   '/',
