@@ -1,0 +1,16 @@
+.dropdownButton {
+    width: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upperRightNavContainer {
+    display: flex;
+    align-items: center;
+}
+
+.sessionLinks {
+    display: flex;
+    flex-direction: column;
+}
