@@ -1,0 +1,25 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbarContents {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.airbnb-logo {
+    color: #ff385c;
+    font-size: xx-large;
+    font-weight: 900;
+    font-family: unset;
+    display: flex;
+}
+
+.airbnb-text {
+    padding-left: 5px;
+}
