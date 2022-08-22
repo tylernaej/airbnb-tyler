@@ -4,11 +4,11 @@ import * as sessionActions from '../../store/session';
 import './NavBarUtilityDropDown.css'
 import LoginFormModal from '../LoginFormModal';
 import { NavLink } from 'react-router-dom';
-
+import SignUpFormModal from "../SignUpFormModal";
 
 function NavBarUtilityDropDown({user}) {
   const dispatch = useDispatch();
-  const [showMenu, setShowMenu] = useState(false);
+  const [menu, setMenu] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
 
   const logout = (e) => {
@@ -19,58 +19,65 @@ function NavBarUtilityDropDown({user}) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <>
+      <div className="sessionLinks">
         Logged In
         <div>{user.username}</div>
         <div>{user.email}</div>
         <div>
           <button onClick={logout}>Log Out</button>      
         </div>
-      </>
+      </div>
     );
   } else {
     sessionLinks = (
-      <>
+      <div className="sessionLinks">
         Not logged in
         <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
+        <SignUpFormModal />
+      </div>
     );
   }
   
-  const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
+  // const openMenu = () => {
+  //   if (showMenu) return;
+  //   setShowMenu(true);
+  // };
   
-  useEffect(() => {
-    if (!showMenu) return;
+  // useEffect(() => {
+  //   if (!showMenu) return;
 
-    const closeMenu = () => {
-      setShowMenu(false);
-    };
+  //   const closeMenu = () => {
+  //     setShowMenu(false);
+  //   };
 
-    document.addEventListener('click', closeMenu);
+  //   document.addEventListener('click', closeMenu);
   
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+  //   return () => document.removeEventListener("click", closeMenu);
+  // }, [showMenu]);
+  const toggleMenu = () => {
+    setMenu(current => !current)
+  }
 
   return (
     <div className="upperRightNavContainer">
-        <button>
+      <div className="host-wrapper">
+        <div className="become-a-host">
             Become a Host
-        </button>
-        <button className="dropdownButton" onClick={openMenu}>
+        </div>
+      </div>
+      <div className="utility-dropdown">
+        <div className="dropdownButton" onClick={toggleMenu}>
             <i class="fa-solid fa-bars"></i>
             <i class="fa-solid fa-user"></i>
-        </button>
-        {showMenu && (
+        </div>
+        {menu && (
             <ul className="profile-dropdown">
-              <div className="sessionLinks">
+              <div >
                   {sessionLinks}
               </div>
             </ul>
         )}
+      </div>
     </div>
   );
 }

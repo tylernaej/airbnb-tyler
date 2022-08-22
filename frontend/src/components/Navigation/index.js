@@ -6,6 +6,7 @@ import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 import NavBarUtilityDropDown from '../NavBarUtilityDropDown/NavBarUtilityDropDown'
 
+
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
@@ -20,7 +21,7 @@ function Navigation({ isLoaded }){
   } else {
     sessionLinks = (
       <>
-        <LoginFormModal />
+        {/* <LoginFormModal /> */}
         {/* <NavLink to="/signup">Sign Up</NavLink> */}
         <NavBarUtilityDropDown />
       </>
@@ -30,9 +31,13 @@ function Navigation({ isLoaded }){
   return (
     <div className='navbar'>
       <li className='navbarContents'>
-        <NavLink exact to="/">
-          <i class="fa-brands fa-airbnb"></i>
-          airbnb
+        <NavLink exact to="/" style={{ textDecoration: 'none' }}>
+          <div className='airbnb-logo'>
+            <i class="fa-brands fa-airbnb"></i>
+            <div className='airbnb-text'>
+              airbnb
+            </div>
+          </div>
         </NavLink>
         {isLoaded && sessionLinks}
       </li>
