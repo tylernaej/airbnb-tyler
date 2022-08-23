@@ -14,22 +14,73 @@ function SingleSpotFullDetails () {
         dispatch(spotsActions.getSpotById(spotId))
     }, [dispatch])
 
+    let imagesArray = []
+    if(activeSpot.Images.length > 0) {
+        activeSpot.Images.forEach(image => {
+            imagesArray.push(image.url)
+        })
+    }
+
+    if(!activeSpot){
+        return null
+    }
+
     return (
-        <>
-            <div>
-                Information about {`${activeSpot.name}`}
+        <>  
+            <div className="title-info">
+                <h1>
+                    Title Information about {`${activeSpot.name}`}
+                </h1>
+                <div className="location-info">
+                    Location Information:
+                    <div>
+                        {`${activeSpot.address},
+                        ${activeSpot.city}, 
+                        ${activeSpot.state}, 
+                        ${activeSpot.country}`}
+                    </div>
+                </div>
+                <div className="ratings-info">
+                    {`${activeSpot.avgRating} Stars`}
+                    {`${activeSpot.numReviews} Reviews`}
+                </div>
             </div>
-            <div className="spot-details">
-                {activeSpot.description}
-                {activeSpot.price}
-                {activeSpot.numReviews}
-                {activeSpot.avgRating}
-                {activeSpot.address}
-                {activeSpot.city}
-                {activeSpot.state}
-                {activeSpot.country}
-                {activeSpot.lat}
-                {activeSpot.lng}
+            <div className="image-info">
+                Picture information will go here
+                <ul className="image-catalog">
+                    {imagesArray.map((image, index) => 
+                        <div key={index}>
+                            <img 
+                                src={image}
+                                alt={null}
+                            />
+                        </div>
+                    )}
+                </ul>
+                <div className="link-to-images">
+                    Link to all images
+                </div>
+            </div>
+            <div className="details-wrapper">
+                <div className="basic-owner-info">
+                    <div className="owner-info">
+                        {`Hosted by ${activeSpot.Owner.firstName} ${activeSpot.Owner.lastName} `}
+                    </div>
+                    <div className="description-info">
+                        Here is a description of the spot:
+                        <p>
+                            {activeSpot.description}
+                        </p>
+                    </div>
+                </div>
+                <div className="booking-price-info">
+                    <div>
+                        Booking info will go here
+                    </div>
+                    <div>
+                        {`Price - ${activeSpot.price} per night`}
+                    </div>
+                </div>
             </div>
         </>
     )

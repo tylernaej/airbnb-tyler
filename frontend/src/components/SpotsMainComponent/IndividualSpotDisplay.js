@@ -24,7 +24,7 @@ function IndividualSpotDisplay ({spot}) {
                             src='https://vishwaentertainers.com/wp-content/uploads/2020/04/No-Preview-Available.jpg'
                             alt={null} 
                         />
-                    </div> 
+                        </div> 
                     }
                     {spot.previewImage &&
                     <div>

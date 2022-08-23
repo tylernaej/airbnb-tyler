@@ -24,7 +24,6 @@ function App() {
     if(!activeSpot){
       if(window.location.pathname.split('/')[1]==='spots'){
         const path = window.location.pathname.split('/')[2]
-        console.log('path', path)
         dispatch(spotsActions.getSpotById(path))
       }
     }

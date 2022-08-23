@@ -22,7 +22,6 @@ function SpotsMainComponent () {
     } else {
         return (
             <div className="content-wrapper">
-                Content To Go Here
                 <div className="list-of-spots">
                     {Object.values(currentAllSpots.spots).map(({id, ownerId, address, city, state, country, description, lat, lng, name, price, avgRating, previewImage}) => {
                         const spot = {id, ownerId, address, city, state, country, description, lat, lng, name, price, avgRating, previewImage}
