@@ -21,6 +21,7 @@ function SingleSpotFullDetails () {
         })
     }
 
+
     if(!activeSpot){
         return null
     }
@@ -32,7 +33,6 @@ function SingleSpotFullDetails () {
                     {`${activeSpot.name}`}
                 </h1>
                 <div className="location-info">
-                    Location Information:
                     <div>
                         {`${activeSpot.address},
                         ${activeSpot.city}, 
@@ -40,32 +40,79 @@ function SingleSpotFullDetails () {
                         ${activeSpot.country}`}
                     </div>
                 </div>
-                <div className="ratings-info">
-                    {`${activeSpot.avgRating} Stars`}
-                    {`${activeSpot.numReviews} Reviews`}
+                <div className="ratings-reviews-info">
+                    <div className="ratings-info">
+                        <i class="fa-solid fa-star"></i>
+                        {`${activeSpot.avgRating}`}
+                    </div>
+                    <i class="fa-solid fa-grip-lines-vertical"></i>
+                    <div className="reviews-info">
+                        {`${activeSpot.numReviews} Reviews`}
+                    </div>
                 </div>
             </div>
             <div className="image-info">
-                Picture information will go here
-                <ul className="image-catalog">
-                    {imagesArray.map((image, index) => 
-                        <div key={index}>
+                {imagesArray.length >= 4 &&
+                <div className="image-grid-wrapper">
+                    <div className="image-grid">
+                        <div className="main-image">
                             <img 
-                                src={image}
-                                alt={null}
+                                src={imagesArray.splice(0,1)}
                             />
                         </div>
-                    )}
-                </ul>
-                <div className="link-to-images">
-                    Link to all images
+                        <div className="first-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="optional-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="optional-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                    </div>
                 </div>
+                }
+                {imagesArray.length < 4 &&
+                <div className="image-grid-wrapper">
+                    <div className="image-grid-less">
+                        <div className="main-image">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                    </div>
+                </div>
+                }
+                {/* <div className="link-to-images">
+                    Link to all images?
+                </div> */}
             </div>
             <div className="details-wrapper">
                 <div className="basic-owner-info">
-                    <div className="owner-info">
+                    <h2 className="owner-info">
                         {`Hosted by ${activeSpot.Owner.firstName} ${activeSpot.Owner.lastName} `}
-                    </div>
+                    </h2>
                     <div className="description-info">
                         Here is a description of the spot:
                         <p>
