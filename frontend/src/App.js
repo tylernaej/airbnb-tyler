@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
+import * as spotsActions from './store/spots';
 import Navigation from "./components/Navigation";
 import SpotsMainComponent from "./components/SpotsMainComponent/SpotsMainComponent";
 import './app.css'
+import SingleSpotFullDetails from "./components/SingleSpotFullDetails/SingleSpotFullDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +19,17 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  console.log('activespot', activeSpot)
+  
+  useEffect(() => {
+    if(!activeSpot){
+      if(window.location.pathname.split('/')[1]==='spots'){
+        const path = window.location.pathname.split('/')[2]
+        console.log('path', path)
+        dispatch(spotsActions.getSpotById(path))
+      }
+    }
+  }, [dispatch])
+
   return (
     <div className="page-body">
       <Navigation isLoaded={isLoaded} />
@@ -27,10 +39,11 @@ function App() {
             <SpotsMainComponent />
           </Route>
           {activeSpot &&
-            <Route path={`/spots/${activeSpot.id}`}>
-              <div>
+            <Route path='/spots/:id'>
+              {/* <div>
                 There will be Information here about {activeSpot.name}
-              </div>
+              </div> */}
+              <SingleSpotFullDetails />
             </Route>
           }
         </Switch>
