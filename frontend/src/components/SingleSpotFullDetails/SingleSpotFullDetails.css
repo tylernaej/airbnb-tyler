@@ -1,4 +1,3 @@
-.spot-details {
-    display: flex;
-    flex-direction: column;
+.spot-detail-wrapper{
+    width: 100%;
 }

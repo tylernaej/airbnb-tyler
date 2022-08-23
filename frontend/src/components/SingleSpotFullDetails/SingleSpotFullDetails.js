@@ -26,10 +26,10 @@ function SingleSpotFullDetails () {
     }
 
     return (
-        <>  
+        <div className="spot-detail-wrapper">  
             <div className="title-info">
                 <h1>
-                    Title Information about {`${activeSpot.name}`}
+                    {`${activeSpot.name}`}
                 </h1>
                 <div className="location-info">
                     Location Information:
@@ -82,7 +82,7 @@ function SingleSpotFullDetails () {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 } 
 
