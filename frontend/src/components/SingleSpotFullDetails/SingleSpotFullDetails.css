@@ -1,0 +1,4 @@
+.spot-details {
+    display: flex;
+    flex-direction: column;
+}
