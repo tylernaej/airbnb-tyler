@@ -9,20 +9,17 @@ import './SpotsMainComponent.css'
 function SpotsMainComponent () {
     const dispatch = useDispatch();
     const currentAllSpots = useSelector(state => state.spots);
+    const activeSpot = useSelector(state => state.spots.activeSpot)
 
     useEffect(() => {
         dispatch(spotsActions.getAllSpots());
     }, [dispatch])
 
-    console.log(currentAllSpots)
-
     if(!currentAllSpots.spots){
-        console.log('entered loading')
         return (
             <div>Loading</div>
         )
     } else {
-        console.log('entered loader')
         return (
             <div className="content-wrapper">
                 Content To Go Here
