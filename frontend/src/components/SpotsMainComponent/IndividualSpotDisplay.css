@@ -1,0 +1,8 @@
+.individual-spot-wrapper {
+    border: 1px solid grey;
+}
+
+.preview-image {
+    max-width: 350px;
+    min-width: 200px;
+}
