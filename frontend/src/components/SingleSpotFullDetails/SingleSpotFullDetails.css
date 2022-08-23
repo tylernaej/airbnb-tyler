@@ -1,3 +1,47 @@
 .spot-detail-wrapper{
     width: 100%;
 }
+
+.title-info{
+    width: 100%
+}
+
+.location-info{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.ratings-reviews-info{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.ratings-info{
+    margin-right: 10px;
+}
+
+.reviews-info{
+    margin-left: 10px;
+}
+
+.details-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.basic-owner-info {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+
+.booking-price-info {
+    grid-column: 3;
+    grid-row: 1 / 2;
+}
+

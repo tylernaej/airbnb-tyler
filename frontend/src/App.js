@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="page-body">
       <Navigation isLoaded={isLoaded} />
-      <div>
+      <div className="body-container">
         <Switch>
           <Route path='/' exact={true}>
             <SpotsMainComponent />

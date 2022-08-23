@@ -32,7 +32,6 @@ function SingleSpotFullDetails () {
                     {`${activeSpot.name}`}
                 </h1>
                 <div className="location-info">
-                    Location Information:
                     <div>
                         {`${activeSpot.address},
                         ${activeSpot.city}, 
@@ -40,13 +39,18 @@ function SingleSpotFullDetails () {
                         ${activeSpot.country}`}
                     </div>
                 </div>
-                <div className="ratings-info">
-                    {`${activeSpot.avgRating} Stars`}
-                    {`${activeSpot.numReviews} Reviews`}
+                <div className="ratings-reviews-info">
+                    <div className="ratings-info">
+                        <i class="fa-solid fa-star"></i>
+                        {`${activeSpot.avgRating}`}
+                    </div>
+                    <i class="fa-solid fa-grip-lines-vertical"></i>
+                    <div className="reviews-info">
+                        {`${activeSpot.numReviews} Reviews`}
+                    </div>
                 </div>
             </div>
             <div className="image-info">
-                Picture information will go here
                 <ul className="image-catalog">
                     {imagesArray.map((image, index) => 
                         <div key={index}>
@@ -58,14 +62,14 @@ function SingleSpotFullDetails () {
                     )}
                 </ul>
                 <div className="link-to-images">
-                    Link to all images
+                    Link to all images?
                 </div>
             </div>
             <div className="details-wrapper">
                 <div className="basic-owner-info">
-                    <div className="owner-info">
+                    <h2 className="owner-info">
                         {`Hosted by ${activeSpot.Owner.firstName} ${activeSpot.Owner.lastName} `}
-                    </div>
+                    </h2>
                     <div className="description-info">
                         Here is a description of the spot:
                         <p>

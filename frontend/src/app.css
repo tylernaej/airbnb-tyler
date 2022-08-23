@@ -5,3 +5,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.body-container {
+    margin-top: 35px;
+}
