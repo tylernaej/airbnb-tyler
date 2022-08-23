@@ -21,6 +21,7 @@ function SingleSpotFullDetails () {
         })
     }
 
+
     if(!activeSpot){
         return null
     }
@@ -51,19 +52,61 @@ function SingleSpotFullDetails () {
                 </div>
             </div>
             <div className="image-info">
-                <ul className="image-catalog">
-                    {imagesArray.map((image, index) => 
-                        <div key={index}>
+                {imagesArray.length >= 4 &&
+                <div className="image-grid-wrapper">
+                    <div className="image-grid">
+                        <div className="main-image">
                             <img 
-                                src={image}
-                                alt={null}
+                                src={imagesArray.splice(0,1)}
                             />
                         </div>
-                    )}
-                </ul>
-                <div className="link-to-images">
-                    Link to all images?
+                        <div className="first-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="optional-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="optional-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                    </div>
                 </div>
+                }
+                {imagesArray.length < 4 &&
+                <div className="image-grid-wrapper">
+                    <div className="image-grid-less">
+                        <div className="main-image">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                    </div>
+                </div>
+                }
+                {/* <div className="link-to-images">
+                    Link to all images?
+                </div> */}
             </div>
             <div className="details-wrapper">
                 <div className="basic-owner-info">
