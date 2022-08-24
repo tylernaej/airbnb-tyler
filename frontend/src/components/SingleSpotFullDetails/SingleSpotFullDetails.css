@@ -34,6 +34,10 @@
 
 .main-image > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .8em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
 
 .first-column-top{
@@ -43,6 +47,10 @@
 
 .first-column-top > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .8em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
 
 .first-column-bottom{
@@ -52,6 +60,10 @@
 
 .first-column-bottom > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .8em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
 
 .optional-column-top{
@@ -61,6 +73,10 @@
 
 .optional-column-top > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .8em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
 
 .optional-column-bottom{
@@ -70,6 +86,10 @@
 
 .optional-column-bottom > img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: .8em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
 
 .ratings-reviews-info{
