@@ -26,8 +26,6 @@ function SingleSpotFullDetails () {
         return null
     }
 
-    const starRating = activeSpot.avgRating.toFixed(1)
-
     return (
         <div className="spot-detail-wrapper">  
             <div className="title-info">
@@ -45,7 +43,7 @@ function SingleSpotFullDetails () {
                 <div className="ratings-reviews-info">
                     <div className="ratings-info">
                         <i class="fa-solid fa-star"></i>
-                        {`${starRating}`}
+                        {`${activeSpot.avgRating}`}
                     </div>
                     <i class="fa-solid fa-grip-lines-vertical"></i>
                     <div className="reviews-info">
