@@ -14,8 +14,8 @@ function IndividualSpotDisplay ({spot}) {
 
     return (
         <div className="individual-spot-wrapper" onClick={handleClick}>
-            <NavLink to={`/spots/${spot.id}`} >
-                <div>
+            <NavLink to={`/spots/${spot.id}`} className="individual-spot-wrapper">
+                <div className="preview-image-wrapper">
                     {!spot.previewImage && 
                         <div>
                         <img
@@ -36,12 +36,15 @@ function IndividualSpotDisplay ({spot}) {
                     }
                 </div>
                 <div className="spot-details">
-                    <div>
-                        <div>{`${spot.city}, ${spot.state}`}</div>
-                        <div>Stars: {`${spot.avgRating}`}</div>
+                    <div className="detail-header">
+                        <h3>{`${spot.city}, ${spot.state}`}</h3>
+                        <div className="star-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <div className="rating-number">{`${spot.avgRating.toFixed(1)}`}</div>
+                        </div>
                     </div>
                     <div>Days that are available?</div>
-                    <div>{`$${spot.price} night`}</div>
+                    <div className="price-details">{`$${spot.price} night`}</div>
                 </div>
             </NavLink>
         </div>
