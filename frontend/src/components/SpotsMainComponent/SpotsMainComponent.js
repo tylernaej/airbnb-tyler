@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import * as spotsActions from '../../store/spots';
 import { NavLink } from 'react-router-dom';
-import SpotsDisplayList from "./SpotsDisplayList";
 import IndividualSpotDisplay from "./IndividualSpotDisplay";
 import './SpotsMainComponent.css'
 
@@ -26,7 +25,7 @@ function SpotsMainComponent () {
                     {Object.values(currentAllSpots.spots).map(({id, ownerId, address, city, state, country, description, lat, lng, name, price, avgRating, previewImage}) => {
                         const spot = {id, ownerId, address, city, state, country, description, lat, lng, name, price, avgRating, previewImage}
                         return (
-                            <div key={id}>
+                            <div key={id} className='single-spot-wrapper'>
                                 <IndividualSpotDisplay spot={spot}/>
                             </div>
                         )
