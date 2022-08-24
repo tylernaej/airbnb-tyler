@@ -22,9 +22,9 @@ function SingleSpotFullDetails () {
     }
 
 
-    if(!activeSpot){
-        return null
-    }
+    // if(!activeSpot){
+    //     return null
+    // }
 
     return (
         <div className="spot-detail-wrapper">  
