@@ -1,8 +1,13 @@
 .individual-spot-wrapper {
-    border: 1px solid grey;
+    text-decoration: none;
 }
 
 .preview-image {
-    max-width: 350px;
-    min-width: 200px;
+    width: 100%;
+    min-height: 80%;
+    object-fit: cover;
+}
+
+.spot-details{
+    text-decoration: none;
 }

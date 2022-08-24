@@ -52,38 +52,7 @@ function SingleSpotFullDetails () {
                 </div>
             </div>
             <div className="image-info">
-                {imagesArray.length >= 4 &&
-                <div className="image-grid-wrapper">
-                    <div className="image-grid">
-                        <div className="main-image">
-                            <img 
-                                src={imagesArray.splice(0,1)}
-                            />
-                        </div>
-                        <div className="first-column-top">
-                            <img 
-                                src={imagesArray.splice(0,1)}
-                            />
-                        </div>
-                        <div className="first-column-bottom">
-                            <img 
-                                src={imagesArray.splice(0,1)}
-                            />
-                        </div>
-                        <div className="optional-column-top">
-                            <img 
-                                src={imagesArray.splice(0,1)}
-                            />
-                        </div>
-                        <div className="optional-column-bottom">
-                            <img 
-                                src={imagesArray.splice(0,1)}
-                            />
-                        </div>
-                    </div>
-                </div>
-                }
-                {imagesArray.length < 4 &&
+                {imagesArray.length <= 3 &&
                 <div className="image-grid-wrapper">
                     <div className="image-grid-less">
                         <div className="main-image">
@@ -99,14 +68,45 @@ function SingleSpotFullDetails () {
                         <div className="first-column-bottom">
                             <img 
                                 src={imagesArray.splice(0,1)}
+                                onError={(e)=>{e.target.onerror = null; e.target.src="https://venturebeat.com/wp-content/uploads/2014/07/airbnb-logo-red.jpg?fit=750%2C422&strip=all"}}
                             />
                         </div>
                     </div>
                 </div>
                 }
-                {/* <div className="link-to-images">
-                    Link to all images?
-                </div> */}
+                {(imagesArray.length > 3) &&
+                <div className="image-grid-wrapper">
+                    <div className="image-grid">
+                        <div className="main-image">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="first-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                                
+                            />
+                        </div>
+                        <div className="first-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="optional-column-top">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                            />
+                        </div>
+                        <div className="optional-column-bottom">
+                            <img 
+                                src={imagesArray.splice(0,1)}
+                                onError={(e)=>{e.target.onerror = null; e.target.src="https://venturebeat.com/wp-content/uploads/2014/07/airbnb-logo-red.jpg?fit=750%2C422&strip=all"}}
+                            />
+                        </div>
+                    </div>
+                </div>
+                }
             </div>
             <div className="details-wrapper">
                 <div className="basic-owner-info">
