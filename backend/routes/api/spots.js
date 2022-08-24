@@ -233,8 +233,9 @@ router.post('/',
     requireAuth,
     validateSpot,
     async (req, res) => {
+        console.log('hit backend route')
         //get user and newSpot info from req
-        const { user } = req;
+        // const { user } = req;
         const {
             address,
             city,
@@ -244,7 +245,8 @@ router.post('/',
             lng,
             name,
             description,
-            price
+            price,
+            user
         } = req.body
         //build a new spot with the info submitted
         const newSpot = Spot.build({

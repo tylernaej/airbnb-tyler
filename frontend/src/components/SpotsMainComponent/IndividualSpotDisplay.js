@@ -40,7 +40,7 @@ function IndividualSpotDisplay ({spot}) {
                         <h3>{`${spot.city}, ${spot.state}`}</h3>
                         <div className="star-rating">
                             <i class="fa-solid fa-star"></i>
-                            <div className="rating-number">{`${spot.avgRating.toFixed(1)}`}</div>
+                            <div className="rating-number">{`${spot.avgRating}`}</div>
                         </div>
                     </div>
                     <div>Days that are available?</div>
