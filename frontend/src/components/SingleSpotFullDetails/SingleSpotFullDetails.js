@@ -43,7 +43,7 @@ function SingleSpotFullDetails () {
                 <div className="ratings-reviews-info">
                     <div className="ratings-info">
                         <i class="fa-solid fa-star"></i>
-                        {`${activeSpot.avgRating}`}
+                        {`${activeSpot.avgRating.toFixed(1)}`}
                     </div>
                     <i class="fa-solid fa-grip-lines-vertical"></i>
                     <div className="reviews-info">
