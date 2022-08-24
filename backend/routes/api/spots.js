@@ -185,6 +185,10 @@ router.get('/:spotId', async(req, res) => {
     })
     spot['Owner'] = owner
 
+    spot.avgRating = Number(spot.avgRating.toFixed(1))
+
+    console.log(spot)
+
     res.status(200)
     res.json(spot)
 });
