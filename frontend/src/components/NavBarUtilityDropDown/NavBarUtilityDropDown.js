@@ -5,6 +5,7 @@ import './NavBarUtilityDropDown.css'
 import LoginFormModal from '../LoginFormModal';
 import { NavLink } from 'react-router-dom';
 import SignUpFormModal from "../SignUpFormModal";
+import AddSpotFormModal from "../AddASpotModal";
 
 function NavBarUtilityDropDown({user}) {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function NavBarUtilityDropDown({user}) {
     <div className="upperRightNavContainer">
       <div className="host-wrapper">
         <div className="become-a-host">
-            Become a Host
+            <AddSpotFormModal />
         </div>
       </div>
       <div className="utility-dropdown">
