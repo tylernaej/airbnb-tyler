@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import SpotsMainComponent from "./components/SpotsMainComponent/SpotsMainComponent";
 import './app.css'
 import SingleSpotFullDetails from "./components/SingleSpotFullDetails/SingleSpotFullDetails";
+import ReviewsById from "./components/ReviewsById/ReviewsById";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,9 @@ function App() {
               <SingleSpotFullDetails />
             </Route>
           }
+          <Route path='/reviews/:id'>
+            <ReviewsById />
+          </Route>
         </Switch>
       </div>
     </div>
