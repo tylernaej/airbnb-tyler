@@ -51,6 +51,7 @@ const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case SET_SPOTS:
+            console.log(action.spots)
             let newSpots = {} 
             action.spots.forEach((spot) => newSpots[spot.id] = spot);
             newState = {...state, spots: {...newSpots}}
