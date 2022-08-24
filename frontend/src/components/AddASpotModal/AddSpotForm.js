@@ -6,26 +6,87 @@ import * as sessionActions from "../../store/session";
 function AddSpotForm() {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
-    const [firstName, setFirstName] = useState("")  
+    const [address, setAddress] = useState("")
+    const [city, setCity] = useState("")  
+    const [state, setState] = useState("")
+    const [country, setCountry] = useState("")
+    const [lat, setLat] = useState(0)
+    const [lng, setLng] = useState(0)
+    const [name, setName] = useState("")
+    const [description, setDescription] = useState("")
+    const [price, setPrice] = useState("")
     const [errors, setErrors] = useState([]);
 
     return (
         <form >
-        <h2 className="signup-bar">Become a Host</h2>
-        <h1 className="welcome-bar">Welcome to Airbnb</h1>
+        <h3 className="signup-bar">Fill out the fields below to start hosting</h3>
+        <h1 className="welcome-bar">Become a Host</h1>
         <ul>
         </ul>
         <div className="submission-fields">
-            <label>
-            {/* First Name */}
             <input
-                placeholder="First Name"
+                placeholder="address"
                 type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
                 required
             />
-            </label>
+            <input
+                placeholder="city"
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+            />
+            <input
+                placeholder="state"
+                type="text"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                required
+            />
+            <input
+                placeholder="country"
+                type="text"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                required
+            />
+            <input
+                placeholder="lat"
+                type="text"
+                value={lat}
+                onChange={(e) => setLat(e.target.value)}
+                required
+            />
+            <input
+                placeholder="lng"
+                type="text"
+                value={lng}
+                onChange={(e) => setLng(e.target.value)}
+                required
+            />
+            <input
+                placeholder="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+            />
+            <input
+                placeholder="description"
+                type="text"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+            />
+            <input
+                placeholder="price"
+                type="text"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+            />
         </div>
         <div className="submit-button-wrapper">
             <button type="submit" className="submit-button">Start Hosting</button>

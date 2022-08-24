@@ -47,7 +47,9 @@ function SingleSpotFullDetails () {
                     </div>
                     <i class="fa-solid fa-grip-lines-vertical"></i>
                     <div className="reviews-info">
-                        {`${activeSpot.numReviews} Reviews`}
+                        <NavLink to={`/reviews/${activeSpot.id}`}>
+                            {`${activeSpot.numReviews} Reviews`}
+                        </NavLink>
                     </div>
                 </div>
             </div>
