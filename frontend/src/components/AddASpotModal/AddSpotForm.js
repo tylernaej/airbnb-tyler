@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import * as spotsActions from "../../store/spots";
 
 function AddSpotForm() {
@@ -16,13 +16,12 @@ function AddSpotForm() {
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
     const [errors, setErrors] = useState([]);
+    const history = useHistory()
 
-    if(!sessionUser) return <Redirect to="/" />
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        
         const formSubmission = {
             address,
             city,
@@ -35,12 +34,13 @@ function AddSpotForm() {
             price,
             user: sessionUser
         }
-        return dispatch(spotsActions.createNewSpot(formSubmission))
-            .catch(async (res) => {
-                console.log('made it to errors', res)
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            })
+        if(sessionUser){
+            return dispatch(spotsActions.createNewSpot(formSubmission))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                })
+        }
     }
 
     return (

@@ -67,9 +67,8 @@ export const createNewSpot = (formSubmission) => async (dispatch) => {
             user
         })
     })
-    console.log('User', user)
     const spot = await response.json()
-    console.log('new spot is', spot)
+    console.log(spot)
     dispatch(addSpotToSpots(spot))
     return spot
 }
@@ -91,10 +90,9 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state, activeSpot: action.spot}
             return newState
         case ADD_SPOT:
-
-            newState = {...state, spots: {...state.spots, ...action.spot}}
-            
-            return state
+            const newSpot = action.spot
+            newState = {...state, spots: {...state.spots, newSpot}}
+            return newState
         default:
             return state;
     }
