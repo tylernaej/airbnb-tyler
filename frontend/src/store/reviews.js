@@ -16,11 +16,10 @@ const setReviews = (reviews) => {
 
 //Thunk Action Creators
 export const getReviewsBySpotId = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/${id}/reviews`);
+    const response = await csrfFetch(`/api/spots/${id}/reviews`);
     if (response.ok) {
         const reviews = await response.json()
-        console.log('Reviews', reviews)
-        dispatch(setReviews(reviews))
+        dispatch(setReviews(reviews.Reviews))
         return reviews
     }
 }
@@ -33,8 +32,12 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_REVIEWS:
             let newReviews = {}
-            return null
+            action.reviews.forEach((review) =>newReviews[review.id] = review);
+            newState = {...state, reviews: {...newReviews}}
+            return newState
         default:
             return state
     }
 }
+
+export default reviewsReducer

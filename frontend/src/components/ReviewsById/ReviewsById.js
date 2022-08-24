@@ -9,7 +9,7 @@ function ReviewsById () {
     const activeReviews = useSelector(state => state.reviews)
 
     useEffect(() => {
-        dispatch(reviewsActions.getReviewsBySpotId(spot))
+        dispatch(reviewsActions.getReviewsBySpotId(spot.id))
     }, [dispatch])
 
     if(!activeReviews){
