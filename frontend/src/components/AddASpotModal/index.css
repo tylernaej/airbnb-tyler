@@ -1,0 +1,8 @@
+.become-host-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+.become-host-button{
+    color: rgb(67, 67, 67);
+}
