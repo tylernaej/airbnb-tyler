@@ -31,7 +31,6 @@ const reviewsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case SET_REVIEWS:
-            console.log(action.reviews)
             let newReviews = {}
             action.reviews.forEach((review) =>newReviews[review.id] = review);
             newState = {...state, reviews: {...newReviews}}
