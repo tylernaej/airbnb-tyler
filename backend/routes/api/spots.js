@@ -185,8 +185,6 @@ router.get('/:spotId', async(req, res) => {
     })
     spot['Owner'] = owner
 
-    console.log(spot)
-
     res.status(200)
     res.json(spot)
 });
@@ -233,9 +231,8 @@ router.post('/',
     requireAuth,
     validateSpot,
     async (req, res) => {
-        console.log('hit backend route')
         //get user and newSpot info from req
-        // const { user } = req;
+        const { user } = req;
         const {
             address,
             city,
@@ -246,7 +243,6 @@ router.post('/',
             name,
             description,
             price,
-            user
         } = req.body
         //build a new spot with the info submitted
         const newSpot = Spot.build({
@@ -374,6 +370,7 @@ router.put('/:spotId',
 router.delete('/:spotId',
     requireAuth,
     async (req, res) => {
+        console.log('hitting backend route!!!!!!!!!')
         //get the user info from req
         const { user } = req;
         //get the spot by id and send error if doesn't exist

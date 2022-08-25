@@ -8,7 +8,6 @@ import './SpotsMainComponent.css'
 function SpotsMainComponent () {
     const dispatch = useDispatch();
     const currentAllSpots = useSelector(state => state.spots);
-    const activeSpot = useSelector(state => state.spots.activeSpot)
 
     useEffect(() => {
         dispatch(spotsActions.getAllSpots());

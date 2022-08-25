@@ -25,10 +25,13 @@ function App() {
     if(!activeSpot){
       if(window.location.pathname.split('/')[1]==='spots'){
         const path = window.location.pathname.split('/')[2]
-        dispatch(spotsActions.getSpotById(path))
+        console.log('On App Reload', typeof Number(path))
+        dispatch(spotsActions.getSpotById(Number(path)))
       }
     }
   }, [dispatch])
+
+
 
   return (
     <div className="page-body">

@@ -4,7 +4,24 @@
 }
 
 .title-info{
-    width: 100%
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.non-owner-details{
+    grid-column: 1 / 4;
+    grid-row: 1 / 2;
+}
+
+.owner-functions{
+    grid-column: 4 / 6;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .location-info{
