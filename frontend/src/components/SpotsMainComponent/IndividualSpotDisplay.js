@@ -10,7 +10,6 @@ function IndividualSpotDisplay ({spot}) {
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log('id being passed in', spot.id)
         dispatch(spotsActions.getSpotById(spot.id));
         // history.push(`/spots/${spot.id}`)
     }

@@ -10,7 +10,7 @@ function UpdateSpotFormModal() {
       <div onClick={() => setShowModal(true)}>Update this Spot</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <UpdateSpotForm/>
+          <UpdateSpotForm setShowModal={setShowModal}/>
         </Modal>
       )}
     </>
