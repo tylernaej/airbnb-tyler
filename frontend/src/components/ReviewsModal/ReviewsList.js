@@ -6,6 +6,7 @@ import './ReviewsList.css'
 
 function ReviewsList () {
     const dispatch = useDispatch()
+    const sessionUser = useSelector (state => state.session.user)
     const activeSpot = useSelector(state => state.spots.activeSpot)
     const activeReviews = useSelector(state => state.reviews)
 
@@ -13,7 +14,7 @@ function ReviewsList () {
         dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id))
     }, [dispatch])
 
-    if(!activeReviews){
+    if(!activeReviews.reviews || !sessionUser|| !activeSpot){
         return (
             <div>
                 Loading
@@ -21,39 +22,36 @@ function ReviewsList () {
         )
     }
 
-    console.log(activeReviews)
-
     return (
         <div className=''>
             {`Reviews List Component Here for ${activeSpot.name}`}
             <div className='stars-numReviews-header'>
                 <div>
-                    Stars
+                    <i className="fa-solid fa-star"></i>
+                    {activeSpot.avgRating}
                 </div>
                 <div>
-                    Number of reviews
+                    {`${activeSpot.numReviews} Reviews`}
                 </div>
-                <div>
-                    Optional Create/Edit If !Owner
-                </div>
+                {(activeSpot.ownerId !== sessionUser.id) &&
+                    <div>Optional Create If !Owner</div>
+                }
             </div>
             <div className='searchBar'>
                 Potential for a search feature here
             </div>
                 <div>
                     List of Reviews Here - will include reviewer and review
-                    {/* {activeReviews.map((review) => {
-                        return (
-                            <>
-                                <div>
-                                    Name of Reviewer
-                                </div>
-                                <div>
-                                    Review info
-                                </div>
-                            </>
-                        )
-                    })} */}
+                    {Object.values(activeReviews.reviews).map((review, idx) => (
+                        <div key={idx}>
+                            <div>
+                                {`${review.User.firstName} -`}
+                            </div>
+                            <div>
+                                {`"${review.review}"`}
+                            </div>
+                        </div>
+                    ))}
                 </div>
         </div>
     )
