@@ -120,7 +120,6 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state, spots: {...newSpots}}
             return newState
         case SET_SPOT:
-
             newState = {...state, activeSpot: action.spot}
             return newState
         case ADD_SPOT:

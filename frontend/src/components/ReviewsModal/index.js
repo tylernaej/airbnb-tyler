@@ -11,7 +11,7 @@ function ReviewModal({numReviews}) {
       <div onClick={() => setShowModal(true)}>{numReviews} Reviews</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <ReviewsList />
+          <ReviewsList setShowModal={setShowModal}/>
         </Modal>
       )}
     </>
