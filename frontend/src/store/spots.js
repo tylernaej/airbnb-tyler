@@ -42,17 +42,17 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 export const getSpotById = (id) => async (dispatch) => {
+    console.log('id in thunk', id)
     const response = await csrfFetch(`/api/spots/${id}`);
     if(response.ok) {
         const spot = await response.json()
         dispatch(setSpot(spot))
-        return spot
     }
 }
 
 export const createNewSpot = (formSubmission) => async (dispatch) => {
-    const {address, city, state, country, lat, lng, name, description, price, user} = formSubmission
-    const response = await csrfFetch("api/spots", {
+    const {address, city, state, country, lat, lng, name, description, price} = formSubmission
+    const response = await csrfFetch("/api/spots", {
         method: "POST",
         body: JSON.stringify({
             address,
@@ -64,13 +64,20 @@ export const createNewSpot = (formSubmission) => async (dispatch) => {
             name,
             description,
             price,
-            user
         })
     })
     const spot = await response.json()
-    console.log(spot)
     dispatch(addSpotToSpots(spot))
     return spot
+}
+
+export const deleteSpot = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${id}`, {
+        method: 'DELETE',
+    });
+    console.log(response)
+    const message = await response.json()
+    return message
 }
 
 
@@ -87,6 +94,7 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state, spots: {...newSpots}}
             return newState
         case SET_SPOT:
+            console.log('In Reducer', action.spot)
             newState = {...state, activeSpot: action.spot}
             return newState
         case ADD_SPOT:

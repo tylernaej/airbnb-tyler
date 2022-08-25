@@ -14,7 +14,7 @@ function AddSpotFormModal() {
             <div className='become-host-button' onClick={() => setShowModal(true)}>Become A Host</div>
             {showModal && sessionUser && (
             <Modal onClose={() => setShowModal(false)}>
-                <AddSpotForm />
+                <AddSpotForm showModal={showModal} setShowModal={setShowModal}/>
             </Modal>
             )}
             {showModal && !sessionUser && (

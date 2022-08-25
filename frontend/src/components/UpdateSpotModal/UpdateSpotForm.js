@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import * as spotsActions from "../../store/spots";
 
-function AddSpotForm({showModal, setShowModal}) {
+function UpdateSpotForm({showModal, setShowModal}) {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
     const [address, setAddress] = useState("")
@@ -44,8 +44,7 @@ function AddSpotForm({showModal, setShowModal}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h3 className="signup-bar">Fill out the fields below to start hosting</h3>
-            <h1 className="welcome-bar">Become a Host</h1>
+            <h3 className="signup-bar">Fill out the fields below to update this Spot</h3>
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
@@ -115,10 +114,10 @@ function AddSpotForm({showModal, setShowModal}) {
                 />
             </div>
             <div className="submit-button-wrapper">
-                <button type="submit" className="submit-button">Start Hosting</button>
+                <button type="submit" className="submit-button">Update Spot</button>
             </div>
         </form>
     );
 }
 
-export default AddSpotForm;
+export default UpdateSpotForm;

@@ -68,8 +68,8 @@ function NavBarUtilityDropDown({user}) {
       </div>
       <div className="utility-dropdown">
         <div className="dropdownButton" onClick={toggleMenu}>
-            <i class="fa-solid fa-bars"></i>
-            <i class="fa-solid fa-user"></i>
+            <i className="fa-solid fa-bars"></i>
+            <i className="fa-solid fa-user"></i>
         </div>
         {menu && (
             <ul className="profile-dropdown">

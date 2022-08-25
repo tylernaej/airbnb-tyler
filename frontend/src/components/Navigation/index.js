@@ -33,7 +33,7 @@ function Navigation({ isLoaded }){
       <li className='navbarContents'>
         <NavLink exact to="/" style={{ textDecoration: 'none' }}>
           <div className='airbnb-logo'>
-            <i class="fa-brands fa-airbnb"></i>
+            <i className="fa-brands fa-airbnb"></i>
             <div className='airbnb-text'>
               airbnb
             </div>

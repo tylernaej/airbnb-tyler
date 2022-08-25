@@ -1,0 +1,25 @@
+.delete-button{
+    width: 45px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.delete-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 160px;
+    display: flex;
+    background-color: white;
+    padding: .75em;
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
+}
+
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}

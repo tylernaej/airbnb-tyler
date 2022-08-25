@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import * as spotsActions from '../../store/spots';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import './IndividualSpotDisplay.css'
 
 function IndividualSpotDisplay ({spot}) {
     const dispatch = useDispatch()
+    const history = useHistory()
 
-    const handleClick = async (e) => {
+    const handleClick = (e) => {
         e.preventDefault();
-        const selectedSpot = await dispatch(spotsActions.getSpotById(spot.id));
+        console.log('id being passed in', spot.id)
+        dispatch(spotsActions.getSpotById(spot.id));
+        // history.push(`/spots/${spot.id}`)
     }
 
     return (
@@ -38,10 +41,15 @@ function IndividualSpotDisplay ({spot}) {
                 <div className="spot-details">
                     <div className="detail-header">
                         <h3>{`${spot.city}, ${spot.state}`}</h3>
+                        {spot.avgRating &&                    
                         <div className="star-rating">
-                            <i class="fa-solid fa-star"></i>
+                            <i className="fa-solid fa-star"></i>
                             <div className="rating-number">{`${spot.avgRating}`}</div>
                         </div>
+                        }
+                        {!spot.avgRating && 
+                        <div>New!</div>
+                        }
                     </div>
                     <div>Days that are available?</div>
                     <div className="price-details">{`$${spot.price} night`}</div>
