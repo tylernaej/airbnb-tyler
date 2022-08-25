@@ -87,7 +87,6 @@ export const deleteSpot = (id) => async (dispatch) => {
 }
 
 export const updateExistingSpot = (id, formSubmission) => async (dispatch) => {
-    console.log('id in thunk',id)
     const {address, city, state, country, lat, lng, name, description, price} = formSubmission
     const response = await csrfFetch(`/api/spots/${id}`, {
         method: 'PUT',
@@ -104,7 +103,6 @@ export const updateExistingSpot = (id, formSubmission) => async (dispatch) => {
         })
     })
     const spot = await response.json()
-    console.log('The spot to update is', spot)
     dispatch(updateSpot(spot))
 }
 
@@ -130,7 +128,6 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state, spots: {...state.spots, newSpot}}
             return newState
         case UPDATE_SPOT:
-            console.log('in reducer')
             let spotsToUpdate = {...state.spots}
             spotsToUpdate[Number((action.spot.id))] = action.spot
             newState = {...state, spots: {...spotsToUpdate}}

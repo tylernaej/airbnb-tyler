@@ -91,7 +91,6 @@ app.use(
         "statusCode": 401
       })
     }
-    console.log(err.errors[0])
     res.status(err.status || 500);
     res.json({
       // title: err.title || 'Server Error',
