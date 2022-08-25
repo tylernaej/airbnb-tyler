@@ -51,9 +51,9 @@ function App() {
               <SingleSpotFullDetails />
             </Route>
           }
-          <Route path='/reviews/:id'>
+          {/* <Route path='/reviews/:id'>
             <ReviewsById />
-          </Route>
+          </Route> */}
         </Switch>
       </div>
     </div>
