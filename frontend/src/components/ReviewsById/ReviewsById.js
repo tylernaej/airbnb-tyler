@@ -15,7 +15,7 @@ function ReviewsById () {
     if(!activeReviews){
         return (
             <div>
-                 {`Review Information Will Go Here for spot with the id of ${spot.id}`}
+                Loading
             </div>
         )
     }

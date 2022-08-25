@@ -1,0 +1,10 @@
+.stars-numReviews-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.searchBar{
+    display: flex;
+    justify-content: center;
+}

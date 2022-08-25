@@ -5,6 +5,7 @@ import { NavLink, useParams } from 'react-router-dom';
 import './SingleSpotFullDetails.css'
 import UpdateSpotFormModal from "../UpdateSpotModal";
 import DeleteSpotSubmission from "../DeleteSpotButton/DeleteSpotSubmission";
+import ReviewModal from "../ReviewsModal";
 
 
 function SingleSpotFullDetails () {
@@ -47,14 +48,15 @@ function SingleSpotFullDetails () {
                     </div>
                     <div className="ratings-reviews-info">
                         <div className="ratings-info">
-                            {/* <i className="fa-solid fa-star"></i> */}
+                            <i className="fa-solid fa-star"></i>
                             {`${activeSpot.avgRating}`}
                         </div>
-                        {/* <i className="fa-solid fa-grip-lines-vertical"></i> */}
+                        <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
-                            <NavLink to={`/reviews/${activeSpot.id}`}>
+                            <ReviewModal numReviews={activeSpot.numReviews}/>
+                            {/* <NavLink to={`/reviews/${activeSpot.id}`}>
                                 {`${activeSpot.numReviews} Reviews`}
-                            </NavLink>
+                            </NavLink> */}
                         </div>
                     </div>
                 </div>
