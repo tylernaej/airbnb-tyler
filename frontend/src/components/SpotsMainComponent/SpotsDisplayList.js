@@ -7,7 +7,6 @@ import IndividualSpotDisplay from "./IndividualSpotDisplay";
 
 function SpotsDisplayList () {
     const spots = useSelector(state => state.spots)
-    console.log(spots)
 
     return (
         <div>

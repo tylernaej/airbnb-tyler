@@ -6,6 +6,7 @@ import * as spotsActions from "../../store/spots";
 function UpdateSpotForm({showModal, setShowModal}) {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user);
+    const activeSpot = useSelector(state => state.spots.activeSpot)
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")  
     const [state, setState] = useState("")
@@ -17,7 +18,6 @@ function UpdateSpotForm({showModal, setShowModal}) {
     const [price, setPrice] = useState("")
     const [errors, setErrors] = useState([]);
     const history = useHistory()
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,12 +34,14 @@ function UpdateSpotForm({showModal, setShowModal}) {
             price,
         }
 
-        const newSpot = await dispatch(spotsActions.createNewSpot(formSubmission))
+        dispatch(spotsActions.updateExistingSpot(activeSpot.id, formSubmission))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             })
-        setShowModal(false)
+            alert('Successfully Updated Spot')
+            setShowModal(false)
+            history.push(`/`)
     }
 
     return (

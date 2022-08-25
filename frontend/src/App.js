@@ -23,9 +23,9 @@ function App() {
   
   useEffect(() => {
     if(!activeSpot){
-      if(window.location.pathname.split('/')[1]==='spots'){
+      if(window.location.pathname.split('/')[1]==='spots' ||
+      window.location.pathname.split('/')[1]==='reviews'){
         const path = window.location.pathname.split('/')[2]
-        console.log('On App Reload', typeof Number(path))
         dispatch(spotsActions.getSpotById(Number(path)))
       }
     }

@@ -9,6 +9,7 @@ function DeleteSpotConfirmed ({id}) {
     const handleClick = async (e) => {
         e.preventDefault();
         dispatch(spotsActions.deleteSpot(id))
+        alert('Sucessfully Deleted Spot')
         history.push('/')
     }
 

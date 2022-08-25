@@ -14,7 +14,6 @@ function SingleSpotFullDetails () {
     const dispatch = useDispatch()
 
     // useEffect(() => {
-    //     console.log('single spot')
     //     dispatch(spotsActions.getSpotById(spotId.id))
     // }, [dispatch])
 
@@ -26,14 +25,10 @@ function SingleSpotFullDetails () {
     }
 
     if(!activeSpot){
-        console.log('Loading')
         return (
             <div>Loading</div>
         )
     }
-
-
-    console.log('Active Spot', typeof activeSpot)
 
     return (
         <div className="spot-detail-wrapper">  
