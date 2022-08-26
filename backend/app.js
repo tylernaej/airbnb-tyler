@@ -74,6 +74,10 @@ app.use(
 
   // Error formatter
   app.use((err, _req, res, _next) => {
+
+    console.log(`\n\n\n In app.js @ Errors here are the errors - ${err} \n\n\n`)
+    console.log(`\n\n\n Err.errors is - ${err.errors} \n\n\n`)
+
     if(err.errors[0] === 'email must be unique') {
       res.status(403)
       return res.json({

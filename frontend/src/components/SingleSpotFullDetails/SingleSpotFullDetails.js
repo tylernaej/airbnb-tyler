@@ -68,9 +68,6 @@ function SingleSpotFullDetails () {
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
                             <ReviewModal />
-                            {/* <NavLink to={`/reviews/${activeSpot.id}`}>
-                                {`${activeSpot.numReviews} Reviews`}
-                            </NavLink> */}
                         </div>
                     </div>
                 </div>

@@ -10,13 +10,14 @@ function DeleteReview ({reviewId, setShowModal, setReviewsDisplay}) {
     const handleClick = (e) => {
         e.preventDefault()
 
-        console.log('in handler')
-        dispatch(reviewsActions.deleteReview(reviewId))
+        const message = dispatch(reviewsActions.deleteReview(reviewId))
         .catch(async (res) => {
+            console.log('res', res)
             const data = await res.json();
             if (data && data.errors) setErrors(data.errors);
         })
 
+        console.log(message)
         alert('Review Successfully Deleted')
         setReviewsDisplay(current => current - 1)
         setShowModal(false)

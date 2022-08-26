@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as reviewsActions from '../../store/reviews'
 import './ReviewsList.css'
 import DeleteReview from '../DeleteReviewButton/DeleteReviewButton';
+import LoginFormModal from '../LoginFormModal';
 
-function ReviewsList ({setShowModal, setReviewsDisplay}) {
+function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
     const dispatch = useDispatch()
     const sessionUser = useSelector (state => state.session.user)
     const activeSpot = useSelector(state => state.spots.activeSpot)
@@ -46,10 +47,20 @@ function ReviewsList ({setShowModal, setReviewsDisplay}) {
             setShowModal(false)
     }
 
-    if(!activeReviews.reviews || !sessionUser|| !activeSpot){
+    if(!activeReviews.reviews || !activeSpot){
         return (
             <div>
                 Loading
+            </div>
+        )
+    }
+
+    if (!sessionUser){
+        return (
+            <div>
+                Please 
+                <LoginFormModal />
+                 to see reviews
             </div>
         )
     }
@@ -63,9 +74,7 @@ function ReviewsList ({setShowModal, setReviewsDisplay}) {
                         <i className="fa-solid fa-star"></i>
                         {activeSpot.avgRating}
                     </div>
-                    <div>
-                        {`${activeSpot.numReviews} Reviews`}
-                    </div>
+                    <div>{reviewsDisplay} Reviews</div>
                 </div>
             </div>
             <div className='create-review'>

@@ -37,7 +37,7 @@ function IndividualSpotDisplay ({spot}) {
                         <img
                             className="preview-image" 
                             src={spot.previewImage}
-                            alt={null} 
+                            onError={(e)=>{e.target.onerror = null; e.target.src="https://venturebeat.com/wp-content/uploads/2014/07/airbnb-logo-red.jpg?fit=750%2C422&strip=all"}} 
                         />
                     </div> 
                     }
