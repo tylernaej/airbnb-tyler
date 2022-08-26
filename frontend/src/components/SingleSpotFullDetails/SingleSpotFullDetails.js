@@ -28,18 +28,22 @@ function SingleSpotFullDetails () {
         })
     }
 
+    // console.log('Before Undefined Check - activespot.rating', typeof activeSpot.avgRating)
+    // console.log('Before Undefined Check - rating toFixed', activeSpot.avgRating.toFixed(1))
     
     if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
         return (
             <div>Loading</div>
         )
     }
-        
-    const stars = Number(activeSpot.avgRating.toFixed(1))
-    console.log('stars', stars)
-    console.log('activespot.rating', typeof activeSpot.avgRating)
-    console.log('rating toFixed', activeSpot.avgRating.toFixed(1))
-    console.log(typeof stars)
+
+    // console.log('Before Stars - activespot.rating', typeof activeSpot.avgRating)
+    // console.log('Before Stars - rating toFixed', activeSpot.avgRating.toFixed(1))
+    // const stars = Number(activeSpot.avgRating.toFixed(1))
+    // console.log('stars', stars)
+    // console.log('activespot.rating', typeof activeSpot.avgRating)
+    // console.log('rating toFixed', activeSpot.avgRating.toFixed(1))
+    // console.log('stars typeof -', typeof stars)
     
     return (
         <div className="spot-detail-wrapper">  
@@ -59,7 +63,7 @@ function SingleSpotFullDetails () {
                     <div className="ratings-reviews-info">
                         <div className="ratings-info">
                             <i className="fa-solid fa-star"></i>
-                            {`${stars}`}
+                            {`${activeSpot.avgRating}`}
                         </div>
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
