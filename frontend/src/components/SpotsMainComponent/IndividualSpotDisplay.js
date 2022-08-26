@@ -14,6 +14,8 @@ function IndividualSpotDisplay ({spot}) {
         // history.push(`/spots/${spot.id}`)
     }
 
+    const stars = spot.avgRating.toFixed(1)
+
     return (
         <div className="individual-spot-wrapper" onClick={handleClick}>
             <NavLink to={`/spots/${spot.id}`} className="individual-spot-wrapper">
@@ -43,7 +45,7 @@ function IndividualSpotDisplay ({spot}) {
                         {spot.avgRating &&                    
                         <div className="star-rating">
                             <i className="fa-solid fa-star"></i>
-                            <div className="rating-number">{`${spot.avgRating}`}</div>
+                            <div className="rating-number">{`${stars}`}</div>
                         </div>
                         }
                         {!spot.avgRating && 

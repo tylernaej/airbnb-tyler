@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import * as reviewsActions from '../../store/reviews'
 import './ReviewsList.css'
+import DeleteReview from '../DeleteReviewButton/DeleteReviewButton';
 
 function ReviewsList ({setShowModal, setReviewsDisplay}) {
     const dispatch = useDispatch()
@@ -112,9 +113,16 @@ function ReviewsList ({setShowModal, setReviewsDisplay}) {
                 <div>
                     List of Reviews Here - will include reviewer and review
                     {Object.values(activeReviews.reviews).map((review, idx) => (
-                        <div key={idx}>
+                        <div key={idx} className='single-review'>
                             <div>
-                                {`${review.User.firstName} -`}
+                                <div>
+                                    {`${review.User.firstName} -`}
+                                </div>
+                                <div>
+                                    {sessionUser.id === review.User.id &&
+                                        <DeleteReview reviewId={review.id} setShowModal={setShowModal} setReviewsDisplay={setReviewsDisplay}/>
+                                    }
+                                </div>
                             </div>
                             <div>
                                 {`"${review.review}"`}
