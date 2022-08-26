@@ -73,7 +73,7 @@ export const getSpotById = (id) => async (dispatch) => {
 }
 
 export const createNewSpot = (formSubmission) => async (dispatch) => {
-    const {address, city, state, country, lat, lng, name, description, price} = formSubmission
+    const {address, city, state, country, lat, lng, name, description, price, previewImage} = formSubmission
     const response = await csrfFetch("/api/spots", {
         method: "POST",
         body: JSON.stringify({
@@ -89,6 +89,20 @@ export const createNewSpot = (formSubmission) => async (dispatch) => {
         })
     })
     const spot = await response.json()
+
+    let url = previewImage
+
+    const imageResponse = await csrfFetch(`/api/spots/${spot.id}/images`, {
+        method: 'POST',
+        body: JSON.stringify({
+            url,
+            previewImage: true
+        })
+    })
+    const image = await imageResponse.json()
+
+    spot.previewImage = image.url
+
     dispatch(addSpotToSpots(spot))
     return spot
 }
@@ -121,19 +135,6 @@ export const updateExistingSpot = (id, formSubmission) => async (dispatch) => {
     dispatch(updateSpot(spot))
 }
 
-export const addPreviewImage = (id, url) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${id}/images`, {
-        method: 'POST',
-        body: JSON.stringify({
-            url,
-            previewImage: true
-        })
-    })
-    const image = await response.json()
-    dispatch(setPreviewImage(image))
-}
-
-
 //Reducers
 
 const initialState = { spots: null, activeSpot: null };
@@ -165,8 +166,9 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case SET_PREVIEW_IMAGE:
             newState = {...state}
-            
-            newState.spots.spots[`${action.image.imageableId}`].previewImage = action.image.url
+            console.log('action in reducer', action.image)
+            console.log(newState.spots[`${action.image.imageableId}`])
+            newState.spots[`${action.image.imageableId}`].previewImage = action.image.url
             console.log('in new state', newState)
         default:
             return state;
