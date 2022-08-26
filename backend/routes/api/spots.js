@@ -143,17 +143,17 @@ router.get('/current',
 router.get('/:spotId', async(req, res) => {
     //get the spot by id, create an average rating and number of reviews attribute  
     const spot = await Spot.findByPk(req.params.spotId, {
-        attributes: {
-            include: [
-                [sequelize.fn("COUNT", sequelize.col("Reviews.stars")),
-                "numReviews"],
-                [sequelize.fn("AVG", sequelize.col("Reviews.stars")),
-                "avgRating"]
-        ]},
-        include: 
-        [
-            {model: Review, attributes: []},
-        ],
+        // attributes: {
+        //     include: [
+        //         [sequelize.fn("COUNT", sequelize.col("Reviews.stars")),
+        //         "numReviews"],
+        //         [sequelize.fn("AVG", sequelize.col("Reviews.stars")),
+        //         "avgRating"]
+        // ]},
+        // include: 
+        // [
+        //     {model: Review, attributes: []},
+        // ],
         group: ["Spot.id"],
         raw: true
     });
@@ -165,6 +165,38 @@ router.get('/:spotId', async(req, res) => {
         "statusCode": 404
     })};
     //get all of the images associated to the spot
+    const reviews = await Review.findAll({
+        where: {
+            spotId: spot.id
+        },
+        raw:true
+    })
+
+    console.log('reviews', reviews)
+
+    let spotRatings = 0
+    let count = 0
+
+    if(reviews.length === 0) spot['avgRating'] = 5
+
+    if(reviews.length > 0) {
+        for (let i = 0; i < reviews.length; i++){
+            if(spot.id === reviews[i].spotId) {
+                spotRatings += reviews[i].stars 
+                count++
+            }
+        }
+        if(spotRatings > 0) {
+            spot['avgRating'] = parseFloat((spotRatings/count).toFixed(1))
+        }
+    }
+
+    if(reviews.length === 0) spot['numReviews'] = 0
+
+    if(reviews.length > 0) {
+        spot['numReviews'] = reviews.length
+    }
+
     const images = await Image.findAll({
         where: {
             spotId: spot.id
