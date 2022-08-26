@@ -28,14 +28,15 @@ function SingleSpotFullDetails () {
         })
     }
 
-    // const stars = activeSpot.avgRating.toFixed(1)
-
+    
     if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
         return (
             <div>Loading</div>
         )
     }
-
+        
+    const stars = activeSpot.avgRating.toFixed(1)
+    
     return (
         <div className="spot-detail-wrapper">  
             <div className="title-info">
@@ -54,7 +55,7 @@ function SingleSpotFullDetails () {
                     <div className="ratings-reviews-info">
                         <div className="ratings-info">
                             <i className="fa-solid fa-star"></i>
-                            {`${activeSpot.avgRating}`}
+                            {`${stars}`}
                         </div>
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
