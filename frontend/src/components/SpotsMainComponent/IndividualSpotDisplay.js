@@ -14,7 +14,10 @@ function IndividualSpotDisplay ({spot}) {
         // history.push(`/spots/${spot.id}`)
     }
 
-    const stars = spot.avgRating.toFixed(1)
+    if(!spot){
+        return null
+    }
+
 
     return (
         <div className="individual-spot-wrapper" onClick={handleClick}>
@@ -45,7 +48,7 @@ function IndividualSpotDisplay ({spot}) {
                         {spot.avgRating &&                    
                         <div className="star-rating">
                             <i className="fa-solid fa-star"></i>
-                            <div className="rating-number">{`${stars}`}</div>
+                            <div className="rating-number">{`${spot.avgRating}`}</div>
                         </div>
                         }
                         {!spot.avgRating && 
