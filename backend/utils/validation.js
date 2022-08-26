@@ -13,6 +13,7 @@ const handleValidationErrors = (req, _res, next) => {
     err.errors = errors;
     err.status = 400;
     err.title = 'Validation error';
+    console.log('In Errors - ', errors)
     next(err);
   }
   next();

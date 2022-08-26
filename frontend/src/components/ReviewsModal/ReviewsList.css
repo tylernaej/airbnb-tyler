@@ -8,3 +8,17 @@
     display: flex;
     justify-content: center;
 }
+
+.create-review{
+    display: flex;
+    justify-content: center;
+}
+
+.review-create-menu{
+    display: flex;
+    flex-direction: column;
+}
+
+.create-header{
+    font-size: x-large;
+}

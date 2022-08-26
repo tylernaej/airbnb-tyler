@@ -19,7 +19,6 @@ function App() {
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
   
   useEffect(() => {
     if(!activeSpot){
@@ -30,8 +29,6 @@ function App() {
       }
     }
   }, [dispatch])
-
-
 
   return (
     <div className="page-body">

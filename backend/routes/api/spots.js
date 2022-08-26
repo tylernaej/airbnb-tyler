@@ -463,7 +463,7 @@ const validateReview = [
         .withMessage('Review text is required'),
     check('stars')
         .exists({checkFalsy: true})
-        .isInt({min: 1, max: 5})
+        .isIn([1,2,3,4,5])
         .withMessage('Stars must be an integer from 1 to 5'),
     handleValidationErrors
 ]
@@ -472,6 +472,7 @@ router.post('/:spotId/reviews',
     requireAuth,
     validateReview,
     async (req, res) => {
+
         //get user info from req
         const { user } = req;
         //get all the reviews associated to the spot Id
@@ -523,7 +524,9 @@ router.post('/:spotId/reviews',
                 userId: user.id,
                 spotId: spot.id
             })
+            console.log('newReview before save -', newReview)
             await newReview.save()
+            console.log('newReview after save -', newReview)
         }
         //send newReview if one is created
         res.status(200)

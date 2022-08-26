@@ -6,17 +6,20 @@ import './SingleSpotFullDetails.css'
 import UpdateSpotFormModal from "../UpdateSpotModal";
 import DeleteSpotSubmission from "../DeleteSpotButton/DeleteSpotSubmission";
 import ReviewModal from "../ReviewsModal";
+import * as reviewsActions from '../../store/reviews'
+
 
 
 function SingleSpotFullDetails () {
     const sessionUser = useSelector((state) => state.session.user);
-    const activeSpot = useSelector(state => state.spots.activeSpot)
+    const activeSpot = useSelector(state => state.spots.activeSpot);
+    const activeReviews = useSelector(state => state.reviews)
     const spotId = useParams()
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(spotsActions.getSpotById(spotId.id))
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id));
+    }, [dispatch])
 
     let imagesArray = []
     if(activeSpot.Images.length > 0) {
@@ -25,7 +28,7 @@ function SingleSpotFullDetails () {
         })
     }
 
-    if(!activeSpot){
+    if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
         return (
             <div>Loading</div>
         )
@@ -53,7 +56,7 @@ function SingleSpotFullDetails () {
                         </div>
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
-                            <ReviewModal numReviews={activeSpot.numReviews}/>
+                            <ReviewModal />
                             {/* <NavLink to={`/reviews/${activeSpot.id}`}>
                                 {`${activeSpot.numReviews} Reviews`}
                             </NavLink> */}

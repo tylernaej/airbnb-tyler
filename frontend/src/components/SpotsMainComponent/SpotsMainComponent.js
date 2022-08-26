@@ -4,14 +4,24 @@ import * as spotsActions from '../../store/spots';
 import { NavLink } from 'react-router-dom';
 import IndividualSpotDisplay from "./IndividualSpotDisplay";
 import './SpotsMainComponent.css'
+import * as reviewsActions from '../../store/reviews'
 
 function SpotsMainComponent () {
     const dispatch = useDispatch();
     const currentAllSpots = useSelector(state => state.spots);
+    
+    useEffect(() => {
+        dispatch(spotsActions.nullSpot())
+    }, [dispatch])
 
     useEffect(() => {
         dispatch(spotsActions.getAllSpots());
     }, [dispatch])
+
+    useEffect(() => {
+        dispatch(reviewsActions.nullReviews())
+    }, [dispatch])
+
 
     if(!currentAllSpots.spots){
         return (
