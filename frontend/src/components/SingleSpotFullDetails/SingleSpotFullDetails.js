@@ -28,7 +28,7 @@ function SingleSpotFullDetails () {
         })
     }
 
-    const stars = activeSpot.avgRating.toFixed(1)
+    // const stars = activeSpot.avgRating.toFixed(1)
 
     if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
         return (
@@ -54,7 +54,7 @@ function SingleSpotFullDetails () {
                     <div className="ratings-reviews-info">
                         <div className="ratings-info">
                             <i className="fa-solid fa-star"></i>
-                            {`${stars}`}
+                            {`${activeSpot.avgRating}`}
                         </div>
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
