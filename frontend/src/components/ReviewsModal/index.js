@@ -28,7 +28,7 @@ function ReviewModal() {
       <div onClick={() => setShowModal(true)}>{reviewsDisplay} Reviews</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <ReviewsList setShowModal={setShowModal} setReviewsDisplay={setReviewsDisplay}/>
+          <ReviewsList setShowModal={setShowModal} reviewsDisplay={reviewsDisplay} setReviewsDisplay={setReviewsDisplay}/>
         </Modal>
       )}
     </>

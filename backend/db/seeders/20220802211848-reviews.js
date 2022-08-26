@@ -4,169 +4,151 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('Reviews', [
       {
-        review: "This was a great place to stay",
-        stars: 5,
-        userId: 1,
-        spotId: 1
-      },
-      {
-        review: "This was a great place to stay",
+        review: "1",
         stars: 5,
         userId: 2,
         spotId: 1
       },
       {
-        review: "This was a great place to stay",
+        review: "2",
         stars: 4,
         userId: 3,
         spotId: 1
       },
       {
-        review: "This was a great place to stay",
+        review: "3",
         stars: 4,
         userId: 4,
         spotId: 1
       },
       {
-        review: "This was a great place to stay",
+        review: "4",
         stars: 5,
         userId: 5,
         spotId: 1
       },
       {
-        review: "This was a great place to stay",
-        stars: 3,
-        userId: 2,
-        spotId: 2
-      },
-      {
-        review: "This was a great place to stay",
+        review: "5",
         stars: 2,
         userId: 3,
         spotId: 2
       },
       {
-        review: "This was a great place to stay",
+        review: "6",
         stars: 3,
         userId: 4,
         spotId: 2
       },
       {
-        review: "This was a great place to stay",
+        review: "7",
         stars: 4,
         userId: 5,
         spotId: 2
       },
       {
-        review: "This was a great place to stay",
+        review: "8",
         stars: 4,
         userId: 1,
         spotId: 2
       },
       {
-        review: "This was a great place to stay",
+        review: "9",
         stars: 5,
         userId: 1,
         spotId: 3
       },
       {
-        review: "This was a great place to stay",
+        review: "10",
         stars: 5,
         userId: 2,
         spotId: 3
       },
       {
-        review: "This was a great place to stay",
+        review: "11",
         stars: 4,
-        userId: 3,
+        userId: 5,
         spotId: 3
       },
       {
-        review: "This was a great place to stay",
+        review: "11",
         stars: 4,
         userId: 1,
         spotId: 4
       },
       {
-        review: "This was a great place to stay",
+        review: "12",
         stars: 4,
         userId: 2,
         spotId: 4
       },
       {
-        review: "This was a great place to stay",
+        review: "13",
         stars: 4,
         userId: 3,
         spotId: 4
       },
       {
-        review: "This was a great place to stay",
+        review: "14",
         stars: 4,
         userId: 5,
         spotId: 4
       },
       {
-        review: "This was a great place to stay",
+        review: "15",
         stars: 4,
-        userId: 5,
+        userId: 4,
         spotId: 5
       },
       {
-        review: "This was a great place to stay",
+        review: "16",
         stars: 2,
         userId: 3,
         spotId: 5
       },
       {
-        review: "This was a great place to stay",
+        review: "17",
         stars: 4,
         userId: 1,
         spotId: 5
       },
       {
-        review: "This was a great place to stay",
-        stars: 4,
-        userId: 1,
-        spotId: 6
-      },
-      {
-        review: "This was a great place to stay",
+        review: "18",
         stars: 4,
         userId: 2,
         spotId: 6
       },
       {
-        review: "This was a great place to stay",
+        review: "19",
         stars: 5,
         userId: 3,
         spotId: 6
       },
       {
-        review: "This was a great place to stay",
+        review: "20",
         stars: 4,
         userId: 4,
         spotId: 6
       },
       {
-        review: "This was a great place to stay",
+        review: "21",
         stars: 5,
         userId: 5,
         spotId: 6
       },
       {
-        review: "This was a great place to stay",
+        review: "22",
         stars: 5,
         userId: 1,
         spotId: 7
       },
       {
-        review: "This was a great place to stay",
+        review: "23",
         stars: 3,
         userId: 3,
         spotId: 7
       },
       {
-        review: "This was a great place to stay",
+        review: "24",
         stars: 3,
         userId: 2,
         spotId: 8

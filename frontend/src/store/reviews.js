@@ -62,14 +62,14 @@ export const createNewReview = (formSubmission, id) => async (dispatch) => {
 }
 
 export const deleteReview = (id) => async (dispatch) => {
-    console.log('in thunk', typeof id, id)
     const response = await csrfFetch(`/api/reviews/${id}`, {
         method: 'DELETE'
     })
+    console.log('after response in thunk')
     if(response.ok){
         const message = await response.json()
-        console.log(message)
         dispatch(removeReview(id))
+        return message
     }
 }
 
@@ -93,6 +93,7 @@ const reviewsReducer = (state = initialState, action) => {
             newState = {...state, reviews: null}
             return newState
         case DELETE_REVIEW:
+            console.log('in state')
             return state
         default:
             return state
