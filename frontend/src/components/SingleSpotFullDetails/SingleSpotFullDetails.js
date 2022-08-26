@@ -17,9 +17,9 @@ function SingleSpotFullDetails () {
     const spotId = useParams()
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id));
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id));
+    // }, [dispatch])
 
     let imagesArray = []
     if(activeSpot.Images.length > 0) {

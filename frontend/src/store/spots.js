@@ -8,6 +8,7 @@ const SET_SPOT = 'spots/getSpotById'
 const ADD_SPOT = 'spots/addSpotToSpots'
 const UPDATE_SPOT = 'spots/updateSpot'
 const NULL_ACTIVE_SPOT = 'spots/nullActiveSpot'
+const SET_PREVIEW_IMAGE = 'spots/setSpotPreviewImage'
 
 
 //Action Creators
@@ -42,6 +43,13 @@ const updateSpot = (spot) => {
 export const nullSpot = () => {
     return {
         type: NULL_ACTIVE_SPOT
+    }
+}
+
+const setPreviewImage = (image) => {
+    return {
+        type: SET_PREVIEW_IMAGE,
+        image
     }
 }
 
@@ -113,6 +121,18 @@ export const updateExistingSpot = (id, formSubmission) => async (dispatch) => {
     dispatch(updateSpot(spot))
 }
 
+export const addPreviewImage = (id, url) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${id}/images`, {
+        method: 'POST',
+        body: JSON.stringify({
+            url,
+            previewImage: true
+        })
+    })
+    const image = await response.json()
+    dispatch(setPreviewImage(image))
+}
+
 
 //Reducers
 
@@ -131,7 +151,8 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case ADD_SPOT:
             const newSpot = action.spot
-            newState = {...state, spots: {...state.spots, newSpot}}
+            newState = {...state, spots: {...state.spots}}
+            newState.spots[Number((action.spot.id))] = newSpot
             return newState
         case UPDATE_SPOT:
             let spotsToUpdate = {...state.spots}
@@ -142,6 +163,11 @@ const spotsReducer = (state = initialState, action) => {
             newState = {...state}
             newState.activeSpot = null
             return newState
+        case SET_PREVIEW_IMAGE:
+            newState = {...state}
+            
+            newState.spots.spots[`${action.image.imageableId}`].previewImage = action.image.url
+            console.log('in new state', newState)
         default:
             return state;
     }

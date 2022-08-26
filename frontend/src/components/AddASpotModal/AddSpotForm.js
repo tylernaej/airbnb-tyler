@@ -15,6 +15,7 @@ function AddSpotForm({showModal, setShowModal}) {
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
+    const [previewImage, setPreviewImage] = useState("")
     const [errors, setErrors] = useState([]);
     const history = useHistory()
 
@@ -39,6 +40,15 @@ function AddSpotForm({showModal, setShowModal}) {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             })
+
+        console.log('newSpot.id', typeof newSpot.id, newSpot.id)
+
+        const returnedImage = await dispatch(spotsActions.addPreviewImage(newSpot.id, previewImage))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            })
+
         setShowModal(false)
     }
 
@@ -111,6 +121,13 @@ function AddSpotForm({showModal, setShowModal}) {
                     type="text"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
+                    required
+                />
+                <input
+                    placeholder="preview image"
+                    type="text"
+                    value={previewImage}
+                    onChange={(e) => setPreviewImage(e.target.value)}
                     required
                 />
             </div>

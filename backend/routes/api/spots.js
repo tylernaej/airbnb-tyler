@@ -262,11 +262,12 @@ router.post('/',
         res.status(201)
         res.json(newSpot)
 });
-//create a new image for a spot
+//create a Preview image for a spot
 router.post('/:spotId/images', 
     requireAuth,
     async (req, res) => {
         //grab the user info and new image info from req
+        console.log('In Backend')
         const { user } = req;
         const { url, previewImage} = req.body
         //grab the spot and check if it exists

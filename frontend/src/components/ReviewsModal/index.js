@@ -15,15 +15,15 @@ function ReviewModal() {
 
   useEffect(() => {
     dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id))
-    // setReviewsDisplay(activeSpot.numReviews)
   }, [dispatch, reviewsDisplay])
 
   if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
     return (
         <div>Loading</div>
     )
-}
+  }
 
+  console.log(typeof reviewsDisplay)
   return (
     <>
       <div onClick={() => setShowModal(true)}>{reviewsDisplay} Reviews</div>

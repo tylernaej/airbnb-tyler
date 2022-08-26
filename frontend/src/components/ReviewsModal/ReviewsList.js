@@ -21,7 +21,6 @@ function ReviewsList ({setShowModal, setReviewsDisplay}) {
     //     dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id))
     // }, [dispatch])
 
-
     const doubleFunction = () => {
         setHideButton(current => !current);
         setShowCreateReview(current => !current)
