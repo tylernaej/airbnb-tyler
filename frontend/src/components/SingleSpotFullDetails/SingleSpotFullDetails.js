@@ -35,10 +35,11 @@ function SingleSpotFullDetails () {
         )
     }
         
-    const stars = activeSpot.avgRating.toFixed(1)
+    const stars = Number(activeSpot.avgRating.toFixed(1))
     console.log('stars', stars)
-    console.log('activespot.rating', activeSpot.avgRating)
+    console.log('activespot.rating', typeof activeSpot.avgRating)
     console.log('rating toFixed', activeSpot.avgRating.toFixed(1))
+    console.log(typeof stars)
     
     return (
         <div className="spot-detail-wrapper">  

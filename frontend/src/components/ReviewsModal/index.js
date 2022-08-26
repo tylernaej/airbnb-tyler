@@ -23,7 +23,6 @@ function ReviewModal() {
     )
   }
 
-  console.log(typeof reviewsDisplay)
   return (
     <>
       <div onClick={() => setShowModal(true)}>{reviewsDisplay} Reviews</div>
