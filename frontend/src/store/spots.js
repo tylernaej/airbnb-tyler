@@ -7,6 +7,7 @@ const SET_SPOTS = 'spots/getAllSpots'
 const SET_SPOT = 'spots/getSpotById'
 const ADD_SPOT = 'spots/addSpotToSpots'
 const UPDATE_SPOT = 'spots/updateSpot'
+const NULL_ACTIVE_SPOT = 'spots/nullActiveSpot'
 
 
 //Action Creators
@@ -35,6 +36,12 @@ const updateSpot = (spot) => {
     return {
         type: UPDATE_SPOT,
         spot
+    }
+}
+
+export const nullSpot = () => {
+    return {
+        type: NULL_ACTIVE_SPOT
     }
 }
 
@@ -130,6 +137,10 @@ const spotsReducer = (state = initialState, action) => {
             let spotsToUpdate = {...state.spots}
             spotsToUpdate[Number((action.spot.id))] = action.spot
             newState = {...state, spots: {...spotsToUpdate}}
+            return newState
+        case NULL_ACTIVE_SPOT:
+            newState = {...state}
+            newState.activeSpot = null
             return newState
         default:
             return state;

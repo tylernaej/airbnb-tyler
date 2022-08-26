@@ -18,9 +18,8 @@ function SingleSpotFullDetails () {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id))
+        dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id));
     }, [dispatch])
-
 
     let imagesArray = []
     if(activeSpot.Images.length > 0) {
@@ -29,7 +28,7 @@ function SingleSpotFullDetails () {
         })
     }
 
-    if(!activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
+    if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
         return (
             <div>Loading</div>
         )
@@ -57,7 +56,7 @@ function SingleSpotFullDetails () {
                         </div>
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
-                            <ReviewModal numReviews={activeSpot.numReviews}/>
+                            <ReviewModal />
                             {/* <NavLink to={`/reviews/${activeSpot.id}`}>
                                 {`${activeSpot.numReviews} Reviews`}
                             </NavLink> */}

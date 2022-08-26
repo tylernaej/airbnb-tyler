@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as reviewsActions from '../../store/reviews'
 import './ReviewsList.css'
 
-function ReviewsList ({setShowModal}) {
+function ReviewsList ({setShowModal, setReviewsDisplay}) {
     const dispatch = useDispatch()
     const sessionUser = useSelector (state => state.session.user)
     const activeSpot = useSelector(state => state.spots.activeSpot)
@@ -18,7 +18,7 @@ function ReviewsList ({setShowModal}) {
 
     // useEffect(() => {
     //     dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id))
-    // }, [dispatch, review])
+    // }, [dispatch])
 
 
     const doubleFunction = () => {
@@ -35,8 +35,6 @@ function ReviewsList ({setShowModal}) {
             review,
             stars
         }
-        
-        console.log('In form', activeSpot.id, formSubmission.stars)
 
         const newReview = dispatch(reviewsActions.createNewReview(formSubmission, activeSpot.id))
             .catch(async (res) => {
@@ -44,6 +42,7 @@ function ReviewsList ({setShowModal}) {
                 if (data && data.errors) setErrors(data.errors);
             })
             alert('Successfully Added Review')
+            setReviewsDisplay(current => current + 1)
             setShowModal(false)
     }
 

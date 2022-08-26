@@ -4,6 +4,7 @@ import { csrfFetch } from './csrf';
 //Types
 const SET_REVIEWS = 'reviews/getReviewsOfSpot'
 const ADD_REVIEW = 'reviews/addReview'
+const NULL_REVIEWS = 'reviews/nullAllReviews'
 
 
 //Action Creators
@@ -18,6 +19,12 @@ const addReview = (review) => {
     return {
         type: ADD_REVIEW,
         review
+    }
+}
+
+export const nullReviews = () => {
+    return{
+        type: NULL_REVIEWS
     }
 }
 
@@ -42,7 +49,6 @@ export const createNewReview = (formSubmission, id) => async (dispatch) => {
             stars
         })
     })
-    console.log(response)
     const newReview = await response.json()
     dispatch(addReview(newReview))
     return newReview
@@ -61,7 +67,11 @@ const reviewsReducer = (state = initialState, action) => {
             return newState
         case ADD_REVIEW:
             const newReview = action.review
-            newState = {...state, reviews: {...state.reviews, newReview}}
+            newState = {...state, reviews: {...state.reviews}}
+            newState.reviews[`${newReview.id}`] = newReview
+            return newState
+        case NULL_REVIEWS:
+            newState = {...state, reviews: null}
             return newState
         default:
             return state
