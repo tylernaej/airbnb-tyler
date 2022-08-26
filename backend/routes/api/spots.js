@@ -267,7 +267,6 @@ router.post('/:spotId/images',
     requireAuth,
     async (req, res) => {
         //grab the user info and new image info from req
-        console.log('In Backend')
         const { user } = req;
         const { url, previewImage} = req.body
         //grab the spot and check if it exists

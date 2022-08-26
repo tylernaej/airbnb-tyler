@@ -33,6 +33,7 @@ function AddSpotForm({showModal, setShowModal}) {
             name,
             description,
             price,
+            previewImage
         }
 
         const newSpot = await dispatch(spotsActions.createNewSpot(formSubmission))
@@ -43,11 +44,12 @@ function AddSpotForm({showModal, setShowModal}) {
 
         console.log('newSpot.id', typeof newSpot.id, newSpot.id)
 
-        const returnedImage = await dispatch(spotsActions.addPreviewImage(newSpot.id, previewImage))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            })
+        // const returnedImage = await dispatch(spotsActions.addPreviewImage(newSpot.id, previewImage))
+        //     .catch(async (res) => {
+        //         const data = await res.json();
+        //         console.log('data in errors', data)
+        //         if (data && data.errors) setErrors(data.errors);
+        //     })
 
         setShowModal(false)
     }
