@@ -5,6 +5,7 @@ import { csrfFetch } from './csrf';
 const SET_REVIEWS = 'reviews/getReviewsOfSpot'
 const ADD_REVIEW = 'reviews/addReview'
 const NULL_REVIEWS = 'reviews/nullAllReviews'
+const DELETE_REVIEW = 'reviews/deleteReview'
 
 
 //Action Creators
@@ -28,6 +29,13 @@ export const nullReviews = () => {
     }
 }
 
+const removeReview = (id) => {
+    return{
+        type: DELETE_REVIEW,
+        id
+    }
+}
+
 
 //Thunk Action Creators
 export const getReviewsBySpotId = (id) => async (dispatch) => {
@@ -41,7 +49,6 @@ export const getReviewsBySpotId = (id) => async (dispatch) => {
 
 export const createNewReview = (formSubmission, id) => async (dispatch) => {
     const {review, stars} = formSubmission
-    console.log('In thunk -', review, typeof stars, stars, typeof id, id)
     const response = await csrfFetch(`/api/spots/${id}/reviews`, {
         method: 'POST',
         body: JSON.stringify({
@@ -52,6 +59,18 @@ export const createNewReview = (formSubmission, id) => async (dispatch) => {
     const newReview = await response.json()
     dispatch(addReview(newReview))
     return newReview
+}
+
+export const deleteReview = (id) => async (dispatch) => {
+    console.log('in thunk', typeof id, id)
+    const response = await csrfFetch(`/api/reviews/${id}`, {
+        method: 'DELETE'
+    })
+    if(response.ok){
+        const message = await response.json()
+        console.log(message)
+        dispatch(removeReview(id))
+    }
 }
 
 //Reducers
@@ -73,6 +92,8 @@ const reviewsReducer = (state = initialState, action) => {
         case NULL_REVIEWS:
             newState = {...state, reviews: null}
             return newState
+        case DELETE_REVIEW:
+            return state
         default:
             return state
     }
