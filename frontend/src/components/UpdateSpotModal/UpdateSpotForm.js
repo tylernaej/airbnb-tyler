@@ -52,63 +52,63 @@ function UpdateSpotForm({showModal, setShowModal}) {
             </ul>
             <div className="submission-fields">
                 <input
-                    placeholder="address"
+                    placeholder={`${activeSpot.address}`}
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="city"
+                    placeholder={`${activeSpot.city}`}
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="state"
+                    placeholder={`${activeSpot.state}`}
                     type="text"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="country"
+                    placeholder={`${activeSpot.country}`}
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="lat"
+                    placeholder={`${activeSpot.lat}`}
                     type="text"
                     value={lat}
                     onChange={(e) => setLat(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="lng"
+                    placeholder={`${activeSpot.lng}`}
                     type="text"
                     value={lng}
                     onChange={(e) => setLng(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="name"
+                    placeholder={`${activeSpot.name}`}
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="description"
+                    placeholder={`${activeSpot.description}`}
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
                 />
                 <input
-                    placeholder="price"
+                    placeholder={`${activeSpot.price}`}
                     type="text"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
