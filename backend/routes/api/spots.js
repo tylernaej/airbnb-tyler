@@ -66,7 +66,7 @@ router.get('/', async(req, res) => {
         }
         //if there were any reviews, add the average rating to the spot
         if(spotRatings > 0) {
-            spot['avgRating'] = spotRatings/count
+            spot['avgRating'] = parseFloat((spotRatings/count).toFixed(1))
         }
     })
     //grab all the image info where the image is considered a 
@@ -184,6 +184,8 @@ router.get('/:spotId', async(req, res) => {
         raw: true
     })
     spot['Owner'] = owner
+
+    spot.avgRating = parseFloat(spot.avgRating.toFixed(1))
 
     res.status(200)
     res.json(spot)
