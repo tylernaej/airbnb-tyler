@@ -182,8 +182,6 @@ router.delete('/:reviewId',
         //get the user from req
         
         const { user } = req
-        console.log(`\n\n\n The User is ${user}\n\n\n`)
-        console.log(`\n\n\n\ Id to delete', ${req.params.reviewId}, ${typeof req.params.reviewId} \n\n\n`)
         //grab review to delete if invalid Id, throw error
         const reviewToDelete = await Review.findByPk(req.params.reviewId)
         if(!reviewToDelete){
@@ -203,13 +201,9 @@ router.delete('/:reviewId',
         }
         //if the active user is the reviewer, delete, and send
         //confirmation
-        console.log('Review to Delete', reviewToDelete)
-        console.log(`\n\n\n UserId, ${typeof user.id} ${user.id} \n\n\n`)
-        console.log(`\n\n\n reviewToDelete.userId, ${typeof reviewToDelete.userId} ${reviewToDelete.userId} \n\n\n`)
 
         const response = await reviewToDelete.destroy()
-        console.log(response)
-        console.log('review deleted!!!!')
+
         res.status(200)
         res.json({
             "message": "Successfully deleted",

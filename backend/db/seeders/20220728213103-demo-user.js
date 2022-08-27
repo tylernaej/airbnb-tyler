@@ -5,40 +5,54 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [
       {
+        firstName: 'Carl',
+        lastName: 'User',
+        email: 'carlUser@user.io',
+        username: 'carlUser',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+      {
+        firstName: 'Amanda',
+        lastName: 'User',
+        email: 'amandaUser@user.io',
+        username: 'amandaUser',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+      {
+        firstName: 'Pat',
+        lastName: 'User',
+        email: 'patUser@user.io',
+        username: 'patUser',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+      {
+        firstName: 'Natalie',
+        lastName: 'User3',
+        email: 'natalieUser@user.io',
+        username: 'natalieUser',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+      {
+        firstName: 'Jared',
+        lastName: 'User4',
+        email: 'jaredUser@user.io',
+        username: 'jaredUser',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+      {
+        firstName: 'Image',
+        lastName: 'Image',
+        email: 'Image@user.io',
+        username: 'Image',
+        hashedPassword: bcrypt.hashSync('Image')
+      },
+      {
         firstName: 'Demo',
         lastName: 'User',
-        email: 'demo@user.io',
-        username: 'DemoUser',
+        email: 'demoUser@user.io',
+        username: 'demoUser',
         hashedPassword: bcrypt.hashSync('password')
       },
-      {
-        firstName: 'Fake',
-        lastName: 'User1',
-        email: 'user1@user.io',
-        username: 'FakeUser1',
-        hashedPassword: bcrypt.hashSync('password')
-      },
-      {
-        firstName: 'Fake',
-        lastName: 'User3',
-        email: 'user2@user.io',
-        username: 'FakeUser2',
-        hashedPassword: bcrypt.hashSync('password')
-      },
-      {
-        firstName: 'Fake',
-        lastName: 'User3',
-        email: 'user3@user.io',
-        username: 'FakeUser3',
-        hashedPassword: bcrypt.hashSync('password')
-      },
-      {
-        firstName: 'Fake',
-        lastName: 'User4',
-        email: 'user4@user.io',
-        username: 'FakeUser4',
-        hashedPassword: bcrypt.hashSync('password')
-      }
     ], {});
   },
 

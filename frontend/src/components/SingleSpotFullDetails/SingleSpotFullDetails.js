@@ -17,33 +17,18 @@ function SingleSpotFullDetails () {
     const spotId = useParams()
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(reviewsActions.getReviewsBySpotId(activeSpot.id));
-    // }, [dispatch])
-
     let imagesArray = []
     if(activeSpot.Images.length > 0) {
         activeSpot.Images.forEach(image => {
             imagesArray.push(image.url)
         })
     }
-
-    // console.log('Before Undefined Check - activespot.rating', typeof activeSpot.avgRating)
-    // console.log('Before Undefined Check - rating toFixed', activeSpot.avgRating.toFixed(1))
     
     if(!activeReviews || !activeSpot || Number(window.location.pathname.split('/')[2]) !== activeSpot.id){
         return (
             <div>Loading</div>
         )
     }
-
-    // console.log('Before Stars - activespot.rating', typeof activeSpot.avgRating)
-    // console.log('Before Stars - rating toFixed', activeSpot.avgRating.toFixed(1))
-    // const stars = Number(activeSpot.avgRating.toFixed(1))
-    // console.log('stars', stars)
-    // console.log('activespot.rating', typeof activeSpot.avgRating)
-    // console.log('rating toFixed', activeSpot.avgRating.toFixed(1))
-    // console.log('stars typeof -', typeof stars)
     
     return (
         <div className="spot-detail-wrapper">  
