@@ -9,7 +9,6 @@ import Navigation from "./components/Navigation";
 import SpotsMainComponent from "./components/SpotsMainComponent/SpotsMainComponent";
 import './app.css'
 import SingleSpotFullDetails from "./components/SingleSpotFullDetails/SingleSpotFullDetails";
-import ReviewsById from "./components/ReviewsById/ReviewsById";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,15 +41,9 @@ function App() {
           </Route>
           {activeSpot &&
             <Route path='/spots/:id'>
-              {/* <div>
-                There will be Information here about {activeSpot.name}
-              </div> */}
               <SingleSpotFullDetails />
             </Route>
           }
-          {/* <Route path='/reviews/:id'>
-            <ReviewsById />
-          </Route> */}
         </Switch>
       </div>
     </div>

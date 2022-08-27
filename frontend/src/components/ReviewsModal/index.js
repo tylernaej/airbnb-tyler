@@ -3,6 +3,7 @@ import { Modal } from '../../context/Modal';
 import ReviewsList from './ReviewsList';
 import { useDispatch, useSelector } from 'react-redux';
 import * as reviewsActions from '../../store/reviews'
+import './index.css'
 
 
 
@@ -25,7 +26,7 @@ function ReviewModal() {
 
   return (
     <>
-      <div onClick={() => setShowModal(true)}>{reviewsDisplay} Reviews</div>
+      <div className='button' onClick={() => setShowModal(true)}>{reviewsDisplay} Reviews</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <ReviewsList setShowModal={setShowModal} reviewsDisplay={reviewsDisplay} setReviewsDisplay={setReviewsDisplay}/>

@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 import NavBarUtilityDropDown from '../NavBarUtilityDropDown/NavBarUtilityDropDown'
+import logo from '../images/favicon-32x32.png'
 
 
 function Navigation({ isLoaded }){
@@ -33,7 +34,8 @@ function Navigation({ isLoaded }){
       <li className='navbarContents'>
         <NavLink exact to="/" style={{ textDecoration: 'none' }}>
           <div className='airbnb-logo'>
-            <i className="fa-brands fa-airbnb"></i>
+            <img src={logo} />
+            {/* <i className="fa-brands fa-airbnb"></i> */}
             <div className='airbnb-text'>
               airbnb
             </div>

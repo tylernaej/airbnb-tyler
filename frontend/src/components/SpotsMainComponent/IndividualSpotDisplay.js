@@ -18,7 +18,6 @@ function IndividualSpotDisplay ({spot}) {
         return null
     }
 
-
     return (
         <div className="individual-spot-wrapper" onClick={handleClick}>
             <NavLink to={`/spots/${spot.id}`} className="individual-spot-wrapper">

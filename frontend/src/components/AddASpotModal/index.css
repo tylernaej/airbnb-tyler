@@ -1,8 +1,29 @@
+@font-face {
+    font-family: 'Quicksand-Medium';
+    src: url('../../../fonts/quicksand/Quicksand-Medium.ttf');
+}
+
 .become-host-wrapper{
+    width: 100%px;
     display: flex;
     justify-content: center;
+    border: 1px solid rgba(180, 180, 180, 0);
+    border-radius: 20px;
+    padding: 8px;
+    opacity: .6;
+    transition: 0.2s;
+    cursor: pointer
+}
+
+.become-host-wrapper:hover{
+    border: 1px solid rgb(242, 242, 242);
+    border-radius: 20px;
+    background-color: rgb(242, 242, 242);
+    opacity: 1;
 }
 
 .become-host-button{
+    width: 100%;
+    font-family: 'Quicksand-Medium';
     color: rgb(67, 67, 67);
 }

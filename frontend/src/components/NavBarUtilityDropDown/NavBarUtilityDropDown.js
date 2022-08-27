@@ -33,28 +33,13 @@ function NavBarUtilityDropDown({user}) {
     sessionLinks = (
       <div className="sessionLinks">
         Not logged in
+        <button className="demo-user-button">Demo User Login</button>
         <LoginFormModal />
         <SignUpFormModal />
       </div>
     );
   }
   
-  // const openMenu = () => {
-  //   if (showMenu) return;
-  //   setShowMenu(true);
-  // };
-  
-  // useEffect(() => {
-  //   if (!showMenu) return;
-
-  //   const closeMenu = () => {
-  //     setShowMenu(false);
-  //   };
-
-  //   document.addEventListener('click', closeMenu);
-  
-  //   return () => document.removeEventListener("click", closeMenu);
-  // }, [showMenu]);
   const toggleMenu = () => {
     setMenu(current => !current)
   }
@@ -66,8 +51,8 @@ function NavBarUtilityDropDown({user}) {
             <AddSpotFormModal />
         </div>
       </div>
-      <div className="utility-dropdown">
-        <div className="dropdownButton" onClick={toggleMenu}>
+      <div className="utility-dropdown" onClick={toggleMenu}>
+        <div className="dropdownButton" >
             <i className="fa-solid fa-bars"></i>
             <i className="fa-solid fa-user"></i>
         </div>
