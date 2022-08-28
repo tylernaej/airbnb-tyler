@@ -43,7 +43,7 @@ function IndividualSpotDisplay ({spot}) {
                 </div>
                 <div className="spot-details">
                     <div className="detail-header">
-                        <h3>{`${spot.city}, ${spot.state}`}</h3>
+                        <div>{`${spot.city}, ${spot.state}`}</div>
                         {spot.avgRating &&                    
                         <div className="star-rating">
                             <i className="fa-solid fa-star"></i>
@@ -54,7 +54,6 @@ function IndividualSpotDisplay ({spot}) {
                         <div>New!</div>
                         }
                     </div>
-                    <div>Days that are available?</div>
                     <div className="price-details">{`$${spot.price} night`}</div>
                 </div>
             </NavLink>
