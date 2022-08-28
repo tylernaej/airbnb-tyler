@@ -7,7 +7,7 @@ import './index.css'
 
 
 
-function ReviewModal() {
+function ReviewModal({rating, setRating}) {
   const activeSpot = useSelector(state => state.spots.activeSpot)
   const activeReviews = useSelector(state => state.reviews)
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ function ReviewModal() {
       <div className='button' onClick={() => setShowModal(true)}>{reviewsDisplay} Reviews</div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <ReviewsList setShowModal={setShowModal} reviewsDisplay={reviewsDisplay} setReviewsDisplay={setReviewsDisplay}/>
+          <ReviewsList setShowModal={setShowModal} reviewsDisplay={reviewsDisplay} setReviewsDisplay={setReviewsDisplay} rating={rating} setRating={setRating}/>
         </Modal>
       )}
     </>

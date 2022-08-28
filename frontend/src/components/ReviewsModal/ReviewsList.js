@@ -6,7 +6,7 @@ import './ReviewsList.css'
 import DeleteReview from '../DeleteReviewButton/DeleteReviewButton';
 import LoginFormModal from '../LoginFormModal';
 
-function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
+function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay, rating={rating}, setRating}) {
     const dispatch = useDispatch()
     const sessionUser = useSelector (state => state.session.user)
     const activeSpot = useSelector(state => state.spots.activeSpot)
@@ -32,15 +32,12 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
         for (const review in activeReviews.reviews) {
             if(sessionUser){
                 if(activeReviews.reviews[review].userId === sessionUser.id){
-                    console.log('has review')
                     setHasReview(true)
                 }
             }
         }
     })
-
-    console.log(hasReview)
-
+    
     const formSubmit = async (e) => {
         e.preventDefault();
         setErrors([])
@@ -62,6 +59,7 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
                 })
                 if(newReview) alert('Successfully Added Review')
                 setReviewsDisplay(current => current + 1)
+                setRating((((activeSpot.avgRating * reviewsDisplay) + parseInt(submitStars))/ (reviewsDisplay+1)).toFixed(1))
                 setShowModal(false)
         }
         if(!validStars.includes(stars)){
@@ -97,7 +95,7 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
                 <div className='stars-numReviews-header'>
                     <div>
                         <i className="fa-solid fa-star"></i>
-                        {activeSpot.avgRating}
+                        {rating}
                     </div>
                     <div>{reviewsDisplay} Reviews</div>
                 </div>
@@ -156,7 +154,7 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
                             </div>
                             <div>
                                 {sessionUser.id === review.User.id &&
-                                    <DeleteReview reviewId={review.id} setShowModal={setShowModal} setReviewsDisplay={setReviewsDisplay}/>
+                                    <DeleteReview review={review} reviewId={review.id} setShowModal={setShowModal} reviewsDisplay={reviewsDisplay} setReviewsDisplay={setReviewsDisplay} rating={rating} setRating={setRating}/>
                                 }
                             </div>
                         </div>
