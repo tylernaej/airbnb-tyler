@@ -31,7 +31,7 @@ function SignUpForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <h2 className="signup-bar">Sign Up</h2>
       <h1 className="welcome-bar">Welcome to Airbnb</h1>
       <ul>

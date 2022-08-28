@@ -40,8 +40,12 @@ function NavBarUtilityDropDown({user}) {
     );
   }
   
-  const toggleMenu = () => {
-    setMenu(current => !current)
+  const toggleMenu = (e) => {
+    if(e.target.className === 'dropdownButton' ||
+    e.target.className === 'fa-solid fa-bars' ||
+    e.target.className === 'fa-solid fa-user'){
+      setMenu(current => !current)
+    }
   }
 
   return (
@@ -51,7 +55,7 @@ function NavBarUtilityDropDown({user}) {
             <AddSpotFormModal />
         </div>
       </div>
-      <div className="utility-dropdown" onClick={toggleMenu}>
+      <div className="utility-dropdown" onClick={(e) => toggleMenu(e)}>
         <div className="dropdownButton" >
             <i className="fa-solid fa-bars"></i>
             <i className="fa-solid fa-user"></i>
