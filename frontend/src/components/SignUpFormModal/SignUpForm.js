@@ -28,7 +28,7 @@ function SignUpForm() {
           if (data && data.errors) setErrors(Object.values(data.errors));
         });
     }
-    if(password !== confirmPassword) setErrors('Password and Confirm Password must match')
+    if(password !== confirmPassword) setErrors(['Password and Confirm Password must match'])
   };
 
   console.log('Errors - ',errors)
