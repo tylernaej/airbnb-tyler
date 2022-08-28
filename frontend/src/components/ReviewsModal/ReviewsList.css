@@ -1,10 +1,55 @@
+@font-face {
+    font-family: 'Quicksand-Medium';
+    src: url('../../../fonts/quicksand/Quicksand-Medium.ttf');
+}
+
+.reviews-wrapper {
+    margin: 15px;
+    font-family: 'Quicksand-Medium';
+    color: rgb(67, 67, 67);
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    font-size: larger;
+    font-weight: 600;
+}
+
 .stars-numReviews-header{
     display: flex;
     flex-direction: row;
+    font-size: larger;
     justify-content: space-between;
+    border-bottom: 1px solid rgb(67, 67, 67);
+    padding: 10px;
+    margin-bottom: 5px;
 }
 
-.searchBar{
+.review-button{
+    margin-top: 5px;
+    color: rgb(67, 67, 67);
+    font-size: medium;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: white;
+    border-radius: 15px;
+    padding: 8px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.review-button:hover{
+    color: rgb(67, 67, 67);
+    font-size: medium;
+    border: 1px solid rgb(180, 180, 180, 0);
+    background-color: rgb(240, 240, 240);
+    border-radius: 15px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.create-header{
+    font-size: x-large;
     display: flex;
     justify-content: center;
 }
@@ -14,11 +59,59 @@
     justify-content: center;
 }
 
+.submission-fields{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    height: 100px;
+}
+
+.review-buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.cancel-button{
+    margin-top: 5px;
+    color: rgb(67, 67, 67);
+    font-size: medium;
+    border: 1px solid rgb(180, 180, 180);
+    background-color: white;
+    border-radius: 15px;
+    padding: 8px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.cancel-button:hover{
+    color: rgb(67, 67, 67);
+    font-size: medium;
+    border: 1px solid rgb(180, 180, 180, 0);
+    background-color: rgb(240, 240, 240);
+    border-radius: 15px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.single-review{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(67, 67, 67);
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.searchBar{
+    display: flex;
+    justify-content: center;
+}
+
 .review-create-menu{
     display: flex;
     flex-direction: column;
 }
 
-.create-header{
-    font-size: x-large;
+.sign-in{
+    margin: 10px;   
 }

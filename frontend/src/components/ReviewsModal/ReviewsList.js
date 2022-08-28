@@ -57,7 +57,7 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
 
     if (!sessionUser){
         return (
-            <div>
+            <div className='sign-in'>
                 Please 
                 <LoginFormModal />
                  to see reviews
@@ -66,8 +66,10 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
     }
 
     return (
-        <div className=''>
-            {`Reviews List Component Here for ${activeSpot.name}`}
+        <div className='reviews-wrapper'>
+            <div className='title'>
+                {`Reviews for ${activeSpot.name}`}
+            </div>
             <div>
                 <div className='stars-numReviews-header'>
                     <div>
@@ -79,7 +81,7 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
             </div>
             <div className='create-review'>
                 {(activeSpot.ownerId !== sessionUser.id) && !hideButton &&
-                    <button onClick={() => doubleFunction() }>Make a Review</button>                    
+                    <button className='review-button' onClick={() => doubleFunction() }>Make a Review</button>                    
                 }
                 {showCreateReview &&
                     <div className='review-create-menu'>
@@ -115,29 +117,25 @@ function ReviewsList ({setShowModal, reviewsDisplay, setReviewsDisplay}) {
                     </div> 
                 }
             </div>
-            <div className='searchBar'>
-                Potential for a search feature here
-            </div>
-                <div>
-                    List of Reviews Here - will include reviewer and review
-                    {Object.values(activeReviews.reviews).map((review, idx) => (
-                        <div key={idx} className='single-review'>
+            <div>
+                {Object.values(activeReviews.reviews).map((review, idx) => (
+                    <div key={idx} className='single-review'>
+                        <div>
                             <div>
-                                <div>
-                                    {`${review.User.firstName} -`}
-                                </div>
-                                <div>
-                                    {sessionUser.id === review.User.id &&
-                                        <DeleteReview reviewId={review.id} setShowModal={setShowModal} setReviewsDisplay={setReviewsDisplay}/>
-                                    }
-                                </div>
+                                {`${review.User.firstName} -`}
                             </div>
                             <div>
-                                {`"${review.review}"`}
+                                {sessionUser.id === review.User.id &&
+                                    <DeleteReview reviewId={review.id} setShowModal={setShowModal} setReviewsDisplay={setReviewsDisplay}/>
+                                }
                             </div>
                         </div>
-                    ))}
-                </div>
+                        <div>
+                            {`"${review.review}"`}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

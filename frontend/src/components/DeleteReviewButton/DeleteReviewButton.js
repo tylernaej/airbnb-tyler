@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from "react";
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import * as reviewsActions from '../../store/reviews'
+import './DeleteReviewButton.css'
 
 function DeleteReview ({reviewId, setShowModal, setReviewsDisplay}) {
     const dispatch = useDispatch()
@@ -23,7 +24,7 @@ function DeleteReview ({reviewId, setShowModal, setReviewsDisplay}) {
 
     return (
         <div>
-            <button onClick={handleClick}>Delete</button>
+            <button className='delete-button' onClick={handleClick}>Delete</button>
         </div>
     )
 }

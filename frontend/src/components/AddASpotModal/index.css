@@ -4,7 +4,7 @@
 }
 
 .become-host-wrapper{
-    width: 100%px;
+    width: 100%;
     display: flex;
     justify-content: center;
     border: 1px solid rgba(180, 180, 180, 0);

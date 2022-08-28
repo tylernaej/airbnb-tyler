@@ -135,7 +135,7 @@ function SingleSpotFullDetails () {
                         {`Hosted by ${activeSpot.Owner.firstName} ${activeSpot.Owner.lastName} `}
                     </h2>
                     <div className="description-info">
-                        Here is a description of the spot:
+                        Description:
                         <p>
                             {activeSpot.description}
                         </p>
@@ -143,10 +143,7 @@ function SingleSpotFullDetails () {
                 </div>
                 <div className="booking-price-info">
                     <div>
-                        Booking info will go here
-                    </div>
-                    <div>
-                        {`Price - ${activeSpot.price} per night`}
+                        {`Price - $${activeSpot.price} per night`}
                     </div>
                 </div>
             </div>
