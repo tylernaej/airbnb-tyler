@@ -44,7 +44,6 @@ function NavBarUtilityDropDown({user}) {
   } else {
     sessionLinks = (
       <div className="sessionLinks">
-        Not logged in
         <button className="demo-user-button" onClick={loginDemoUser}>Demo User Login</button>
         <LoginFormModal />
         <SignUpFormModal />
