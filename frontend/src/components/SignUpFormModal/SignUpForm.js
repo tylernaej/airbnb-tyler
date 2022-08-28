@@ -24,11 +24,14 @@ function SignUpForm() {
       const newAccount = dispatch(sessionActions.signup({ firstName, lastName, email, username, password }))
         .catch(async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+          console.log('Errors from backend - ', Object.values(data.errors))
+          if (data && data.errors) setErrors(Object.values(data.errors));
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+    if(password !== confirmPassword) setErrors('Password and Confirm Password must match')
   };
+
+  console.log('Errors - ',errors)
 
   return (
     <form onSubmit={handleSubmit} className='signup-form'>
