@@ -101,7 +101,30 @@ module.exports = {
         name: 'NEW! Stunning Enfield Home w/ Hot Tub + Boat Dock!',
         description: 'Get a private slice of Lake Mascoma at this spacious and bright 4-bedroom, 4-bathroom home. In the heart of New Hampshires Upper Valley, this Enfield vacation rental boasts sprawling lake views, 400 feet of private lakefront, and a private boat dock.',
         price: 895,
+      },      {
+        ownerId: 2,
+        address: '691 Overlook Avenue',
+        city: 'York',
+        state: 'Maine',
+        country: 'United States',
+        lat: 43.6406,
+        lng: 72.1440,
+        name: 'Paradise in York',
+        description: 'This vast 6 bedroom property offers you everything you need for your dream vacation.',
+        price: 700,
+      },      {
+        ownerId: 5,
+        address: '9380 Orchard Street',
+        city: 'Orland',
+        state: 'Maine',
+        country: 'United States',
+        lat: 43.6406,
+        lng: 72.1440,
+        name: 'Serene Waterfront Cabin with private dock',
+        description: 'This beautifully renovated, heritage cabin is built on stilts RIGHT over the pristine waters of Toddy Pond, grandfathered into past zoning. Step out your back door onto your own private dock, take the kayaks out for an adventure or just sit by the water.',
+        price: 229,
       }
+      
     ], {})
   },
 

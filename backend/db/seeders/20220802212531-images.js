@@ -186,6 +186,69 @@ module.exports = {
         reviewId: null,
         userId: 6
       },
+      {
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-523783410417354397/original/1e3194e7-8139-4065-bb5e-0f614747d167.jpeg?im_w=1200',
+        previewImage: true,
+        spotId: 9,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-523783410417354397/original/a0517e76-4d5a-4ead-b69a-a9acfcffab26.jpeg?im_w=720',
+        previewImage: false,
+        spotId: 9,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-523783410417354397/original/db00b983-336c-4ff8-876d-63f11f74349f.jpeg?im_w=720',
+        previewImage: false,
+        spotId: 9,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-523783410417354397/original/65f12656-34aa-42aa-8538-0ca92507224c.jpeg?im_w=720',
+        previewImage: false,
+        spotId: 9,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-523783410417354397/original/b304fc28-5ad7-47e7-9e8f-818afcd41a63.jpeg?im_w=720',
+        previewImage: false,
+        spotId: 9,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/6b7f2d67-904c-4de4-b81a-927089c7a3f0.jpg?im_w=1200',
+        previewImage: true,
+        spotId: 10,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/c41b24cc-bacc-427b-86a8-80b1eba062b6.jpg?im_w=720',
+        previewImage: false,
+        spotId: 10,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/8baafbcf-617c-4c47-8834-497df77e76b8.jpg?im_w=720',
+        previewImage: false,
+        spotId: 10,
+        reviewId: null,
+        userId: 6
+      },
+      {
+        url: 'https://a0.muscache.com/im/pictures/6e12b982-63cd-4d9c-99c4-78955d3e6c42.jpg?im_w=1200',
+        previewImage: false,
+        spotId: 10,
+        reviewId: null,
+        userId: 6
+      },
 
 
 
