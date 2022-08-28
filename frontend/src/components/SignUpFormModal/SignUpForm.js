@@ -37,6 +37,7 @@ function SignUpForm() {
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
+      <div className="submission-fields">
         <label>
           {/* First Name */}
           <input
@@ -98,6 +99,7 @@ function SignUpForm() {
           />
         </label>
         <button type="submit" className="submit-button">Sign Up</button>
+      </div>
     </form>
   );
 }

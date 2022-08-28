@@ -31,7 +31,6 @@ function LoginForm({setShowModal}) {
           <li key={idx}>{error}</li>
         ))}
       </ul>
-      <div className="form-submission-fields">
         <label>
           {/* Username or Email */}
           <input
@@ -53,7 +52,6 @@ function LoginForm({setShowModal}) {
           />
         </label>
       <button type="submit" className="submit-button" >Log In</button>
-      </div>
     </form>
   );
 }
