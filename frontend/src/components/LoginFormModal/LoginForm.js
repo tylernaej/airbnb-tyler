@@ -1,5 +1,5 @@
 // frontend/src/components/LoginFormModal/LoginForm.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import './LoginForm.css'
@@ -9,6 +9,12 @@ function LoginForm({setShowModal}) {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+
+  useEffect (() => {
+    const errorsArray = []
+    if(!credential) errorsArray.push("Username can't be empty")
+    if(!password) errorsArray.push("Password can't be empty")
+  }, [credential, password])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +41,7 @@ function LoginForm({setShowModal}) {
         <label>
           {/* Username or Email */}
           <input
-            placeholder="Username or Email"
+            placeholder="Username"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}

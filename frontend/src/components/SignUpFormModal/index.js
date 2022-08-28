@@ -15,7 +15,7 @@ function SignUpFormModal() {
     <>
       <button className='button' onClick={handleClick}>Sign Up</button>
       {showModal && (
-        <Modal style={'border-radius: 10px'} onClose={() => setShowModal(false)}>
+        <Modal onClose={() => setShowModal(false)}>
           <SignUpForm />
         </Modal >
       )}
