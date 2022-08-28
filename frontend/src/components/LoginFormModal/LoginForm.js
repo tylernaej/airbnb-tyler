@@ -4,7 +4,7 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import './LoginForm.css'
 
-function LoginForm() {
+function LoginForm({setShowModal}) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +22,7 @@ function LoginForm() {
   };
 
   return (
+
     <form onSubmit={handleSubmit} className='login-form'>
       <h2 className="login-bar">Log in</h2>
       <h1 className="welcome-bar">Welcome to Airbnb</h1>
@@ -51,9 +52,7 @@ function LoginForm() {
             required
           />
         </label>
-      </div>
-      <div className="submit-button-wrapper">
-        <button type="submit" className="submit-button" >Log In</button>
+      <button type="submit" className="submit-button" >Log In</button>
       </div>
     </form>
   );

@@ -31,7 +31,7 @@ function SignUpForm() {
   };
 
   return (
-    <form >
+    <form onSubmit={handleSubmit} className='signup-form'>
       <h2 className="signup-bar">Sign Up</h2>
       <h1 className="welcome-bar">Welcome to Airbnb</h1>
       <ul>
@@ -98,8 +98,6 @@ function SignUpForm() {
             required
           />
         </label>
-      </div>
-      <div className="submit-button-wrapper">
         <button type="submit" className="submit-button">Sign Up</button>
       </div>
     </form>
