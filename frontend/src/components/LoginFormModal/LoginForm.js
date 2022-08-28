@@ -31,6 +31,7 @@ function LoginForm({setShowModal}) {
           <li key={idx}>{error}</li>
         ))}
       </ul>
+      <div className="form-submission-fields">
         <label>
           {/* Username or Email */}
           <input
@@ -51,7 +52,8 @@ function LoginForm({setShowModal}) {
             required
           />
         </label>
-      <button type="submit" className="submit-button" >Log In</button>
+      <button type="submit" className="submit-button" onClick={handleSubmit}>Log In</button>
+      </div>
     </form>
   );
 }
