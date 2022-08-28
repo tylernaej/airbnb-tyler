@@ -166,10 +166,7 @@ const spotsReducer = (state = initialState, action) => {
             return newState
         case SET_PREVIEW_IMAGE:
             newState = {...state}
-            console.log('action in reducer', action.image)
-            console.log(newState.spots[`${action.image.imageableId}`])
             newState.spots[`${action.image.imageableId}`].previewImage = action.image.url
-            console.log('in new state', newState)
         default:
             return state;
     }

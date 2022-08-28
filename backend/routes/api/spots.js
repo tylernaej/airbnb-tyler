@@ -172,8 +172,6 @@ router.get('/:spotId', async(req, res) => {
         raw:true
     })
 
-    console.log('reviews', reviews)
-
     let spotRatings = 0
     let count = 0
 
@@ -558,9 +556,7 @@ router.post('/:spotId/reviews',
                 userId: user.id,
                 spotId: spot.id
             })
-            console.log('newReview before save -', newReview)
             await newReview.save()
-            console.log('newReview after save -', newReview)
         }
         //send newReview if one is created
         res.status(200)

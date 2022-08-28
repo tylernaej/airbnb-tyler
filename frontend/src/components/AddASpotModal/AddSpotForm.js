@@ -42,15 +42,6 @@ function AddSpotForm({showModal, setShowModal}) {
                 if (data && data.errors) setErrors(data.errors);
             })
 
-        console.log('newSpot.id', typeof newSpot.id, newSpot.id)
-
-        // const returnedImage = await dispatch(spotsActions.addPreviewImage(newSpot.id, previewImage))
-        //     .catch(async (res) => {
-        //         const data = await res.json();
-        //         console.log('data in errors', data)
-        //         if (data && data.errors) setErrors(data.errors);
-        //     })
-
         setShowModal(false)
     }
 
