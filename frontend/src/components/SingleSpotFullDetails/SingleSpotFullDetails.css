@@ -130,6 +130,10 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     grid-auto-rows: minmax(100px, auto);
+    margin: 30px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgb(180, 180, 180);
+    border-bottom: 1px solid rgb(180, 180, 180);
 }
 
 .basic-owner-info {
@@ -140,5 +144,8 @@
 .booking-price-info {
     grid-column: 3;
     grid-row: 1 / 2;
+    margin-top: 10px;
+    font-size: larger;
+    font-weight: 600;
 }
 

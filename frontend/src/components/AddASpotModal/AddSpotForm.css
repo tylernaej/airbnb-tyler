@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Quicksand-Medium';
+    src: url('../../../fonts/quicksand/Quicksand-Medium.ttf');
+}
+
+.add-spot-form{
+    max-width: 100%;
+    font-family: 'Quicksand-Medium';
+    color: rgb(67, 67, 67);
+    border: 1px solid rgb(120, 120, 120);
+    border-radius: 20px;
+    padding: 20px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+}
+
+.host-submission-fields{
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 15px;
+}
+

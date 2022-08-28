@@ -1,3 +1,30 @@
+.ratings-reviews-info{
+    display: flex;
+    align-items: center;
+}
+
 .button{
+    color: rgb(67, 67, 67);
+    font-size: medium;
+    border: 1px solid rgb(180, 180, 180, 0);
+    background-color: white;
+    border-radius: 15px;
+    padding: 8px;
     cursor: pointer;
+    transition: .2s;
+    margin-top: 0px;
+}
+
+.button:hover{
+    color: rgb(67, 67, 67);
+    font-size: medium;
+    border: 1px solid rgb(180, 180, 180, 0);
+    background-color: rgb(240, 240, 240);
+    border-radius: 15px;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.ratings-info{
+    margin-right: 15px;
 }
