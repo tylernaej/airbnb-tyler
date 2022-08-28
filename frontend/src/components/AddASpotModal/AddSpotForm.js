@@ -11,8 +11,8 @@ function AddSpotForm({showModal, setShowModal}) {
     const [city, setCity] = useState("")  
     const [state, setState] = useState("")
     const [country, setCountry] = useState("")
-    const [lat, setLat] = useState(0)
-    const [lng, setLng] = useState(0)
+    const [lat, setLat] = useState("")
+    const [lng, setLng] = useState("")
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
@@ -24,6 +24,7 @@ function AddSpotForm({showModal, setShowModal}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
+        let errorsArray = []
         const formSubmission = {
             address,
             city,
@@ -37,13 +38,27 @@ function AddSpotForm({showModal, setShowModal}) {
             previewImage
         }
 
-        const newSpot = await dispatch(spotsActions.createNewSpot(formSubmission))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            })
+        if(!Number(lat)) errorsArray.push('Lat must be listed a number between -90 and 90')
+        if(!Number(lng)) errorsArray.push('Lng must be listed as a number between -180 and 180')
+        if(parseFloat(lat) < -90 || parseFloat(lat) > 90) errorsArray.push('Lat must be between -90 and 90')
+        if(parseFloat(lng) < -180 || parseFloat(lng) > 180) errorsArray.push('Lng must be between -180 and 180')
+        if(!Number(price)) errorsArray.push('Price must be listed as a number')
 
-        setShowModal(false)
+        if(!(/.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(previewImage.split('?')[0]))){
+            errorsArray.push("Please submit a valid preview image")
+          }
+
+        setErrors(errorsArray)
+
+        if(errorsArray.length === 0){
+            const newSpot = await dispatch(spotsActions.createNewSpot(formSubmission))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                })
+    
+            setShowModal(false)
+        }
     }
 
     return (

@@ -16,6 +16,7 @@ function SingleSpotFullDetails () {
     const activeReviews = useSelector(state => state.reviews)
     const spotId = useParams()
     const dispatch = useDispatch()
+    const [rating, setRating] = useState(activeSpot.avgRating)
 
     let imagesArray = []
     if(activeSpot.Images.length > 0) {
@@ -48,11 +49,11 @@ function SingleSpotFullDetails () {
                     <div className="ratings-reviews-info">
                         <div className="ratings-info">
                             <i className="fa-solid fa-star"></i>
-                            {`${activeSpot.avgRating}`}
+                            {rating}
                         </div>
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
-                            <ReviewModal />
+                            <ReviewModal rating={rating} setRating={setRating}/>
                         </div>
                     </div>
                 </div>

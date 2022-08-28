@@ -13,7 +13,7 @@ function DeleteSpotSubmission () {
       }
 
     return (
-        <div>
+        <div className="delete-button-wrapper">
             <div className="delete-button" onClick={toggleMenu} >
                 Delete Spot
             </div>
@@ -21,10 +21,10 @@ function DeleteSpotSubmission () {
                 <div className="delete-dropdown">
                     Are you sure you want to permanently delete this spot?
                     <div className="buttons">
-                        <div>
+                        <div className="confirm-delete">
                             <DeleteSpotConfirmed id={activeSpot.id}/>
                         </div>
-                        <div onClick={toggleMenu}>Cancel</div>
+                        <div className="delete-cancel" onClick={toggleMenu}>Cancel</div>
                     </div>
 
                 </div>

@@ -1,10 +1,11 @@
 .delete-button {
     color: rgb(67, 67, 67);
+    width: 88px;
     font-size: medium;
     border: 1px solid rgb(180, 180, 180, 10);
     background-color: rgb(255, 191, 191);
     border-radius: 15px;
-    padding: 4px;
+    padding: 6px;
     padding-left: 30px;
     padding-right: 30px;
     cursor: pointer;
@@ -17,7 +18,7 @@
     border: 1px solid rgb(180, 180, 180, 20);
     background-color: rgb(255, 116, 116);
     border-radius: 15px;
-    padding: 4px;
+    padding: 6px;
     padding-left: 30px;
     padding-right: 30px;
     cursor: pointer;

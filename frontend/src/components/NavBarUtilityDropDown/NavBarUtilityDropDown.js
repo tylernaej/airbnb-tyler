@@ -11,17 +11,29 @@ function NavBarUtilityDropDown({user}) {
   const dispatch = useDispatch();
   const [menu, setMenu] = useState(false);
   const sessionUser = useSelector(state => state.session.user);
+  const [errors, setErrors] = useState([]);
 
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
   };
 
+  const loginDemoUser = () => {
+    const credential = "demoUser"
+    const password = "password"
+    return dispatch(sessionActions.login({ credential, password }))
+    .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+      }
+    );
+  }
+
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
       <div className="sessionLinks">
-        Logged In
+        {`Welcome, ${sessionUser.firstName}`}
         <div>{user.username}</div>
         <div>{user.email}</div>
         <div>
@@ -33,7 +45,7 @@ function NavBarUtilityDropDown({user}) {
     sessionLinks = (
       <div className="sessionLinks">
         Not logged in
-        <button className="demo-user-button">Demo User Login</button>
+        <button className="demo-user-button" onClick={loginDemoUser}>Demo User Login</button>
         <LoginFormModal />
         <SignUpFormModal />
       </div>

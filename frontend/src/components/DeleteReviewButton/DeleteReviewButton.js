@@ -4,9 +4,10 @@ import { NavLink, useHistory, useParams } from 'react-router-dom';
 import * as reviewsActions from '../../store/reviews'
 import './DeleteReviewButton.css'
 
-function DeleteReview ({reviewId, setShowModal, setReviewsDisplay}) {
+function DeleteReview ({review, reviewId, setShowModal, reviewsDisplay, setReviewsDisplay, rating, setRating}) {
     const dispatch = useDispatch()
     const [errors, setErrors] = useState([]);
+    const activeSpot = useSelector(state => state.spots.activeSpot)
 
     const handleClick = (e) => {
         e.preventDefault()
@@ -19,6 +20,7 @@ function DeleteReview ({reviewId, setShowModal, setReviewsDisplay}) {
 
         alert('Review Successfully Deleted')
         setReviewsDisplay(current => current - 1)
+        setRating((((rating * reviewsDisplay) - review.stars) / (reviewsDisplay-1)).toFixed(1))
         setShowModal(false)
     }
 

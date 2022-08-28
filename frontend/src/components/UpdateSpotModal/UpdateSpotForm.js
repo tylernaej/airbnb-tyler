@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import * as spotsActions from "../../store/spots";
+import './UpdateSpotForm.css'
 
 function UpdateSpotForm({showModal, setShowModal}) {
     const dispatch = useDispatch();
@@ -11,8 +12,8 @@ function UpdateSpotForm({showModal, setShowModal}) {
     const [city, setCity] = useState("")  
     const [state, setState] = useState("")
     const [country, setCountry] = useState("")
-    const [lat, setLat] = useState(0)
-    const [lng, setLng] = useState(0)
+    const [lat, setLat] = useState("")
+    const [lng, setLng] = useState("")
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const [price, setPrice] = useState("")
@@ -22,6 +23,7 @@ function UpdateSpotForm({showModal, setShowModal}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
+        let errorsArray = []
         const formSubmission = {
             address,
             city,
@@ -34,81 +36,90 @@ function UpdateSpotForm({showModal, setShowModal}) {
             price,
         }
 
-        dispatch(spotsActions.updateExistingSpot(activeSpot.id, formSubmission))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            })
-            alert('Successfully Updated Spot')
-            setShowModal(false)
-            history.push(`/`)
+        if(!Number(lat)) errorsArray.push('Lat must be listed as numbers')
+        if(!Number(lng)) errorsArray.push('Lng must be listed as numbers')
+        if(parseFloat(lat) < -90 || parseFloat(lat) > 90) errorsArray.push('Lat must be between -90 and 90')
+        if(parseFloat(lng) < -180 || parseFloat(lng) > 180) errorsArray.push('Lng must be between -180 and 180')
+        if(!Number(price)) errorsArray.push('Price must be listed as a number')
+        setErrors(errorsArray)
+
+        if(errorsArray.length === 0){
+            dispatch(spotsActions.updateExistingSpot(activeSpot.id, formSubmission))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                })
+                alert('Successfully Updated Spot')
+                setShowModal(false)
+                history.push(`/`)
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="update-form" onSubmit={handleSubmit}>
             <h3 className="signup-bar">Fill out the fields below to update this Spot</h3>
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <div className="submission-fields">
+            <div className="update-submission-fields">
                 <input
-                    placeholder={`${activeSpot.address}`}
+                    placeholder={`Address - ${activeSpot.address}`}
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.city}`}
+                    placeholder={`City - ${activeSpot.city}`}
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.state}`}
+                    placeholder={`State - ${activeSpot.state}`}
                     type="text"
                     value={state}
                     onChange={(e) => setState(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.country}`}
+                    placeholder={`Country - ${activeSpot.country}`}
                     type="text"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.lat}`}
+                    placeholder={`Lat - ${activeSpot.lat}`}
                     type="text"
                     value={lat}
                     onChange={(e) => setLat(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.lng}`}
+                    placeholder={`Lng - ${activeSpot.lng}`}
                     type="text"
                     value={lng}
                     onChange={(e) => setLng(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.name}`}
+                    placeholder={`Name - ${activeSpot.name}`}
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.description}`}
+                    placeholder={`Description - ${activeSpot.description}`}
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
                 />
                 <input
-                    placeholder={`${activeSpot.price}`}
+                    placeholder={`Price - ${activeSpot.price}`}
                     type="text"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}

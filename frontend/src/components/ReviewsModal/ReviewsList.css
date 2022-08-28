@@ -59,8 +59,9 @@
     justify-content: center;
 }
 
-.submission-fields{
+.review-submission-fields{
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-end;
     height: 100px;
