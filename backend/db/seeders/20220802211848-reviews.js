@@ -152,6 +152,42 @@ module.exports = {
         stars: 3,
         userId: 2,
         spotId: 8
+      },
+      {
+        review: "Great location and comfortable house. Short walk to everywhere. Somewhat aimed at corporate guests but still works very well for families.",
+        stars: 4,
+        userId: 2,
+        spotId: 9
+      },  
+      {
+        review: "This was by far one of the best weekends any of us girls have had. We hosted my sisters bachelorette, hired a private chef (Howell Catering and Prep- highly recommend), and had the ultimate girls weekend.",
+        stars: 5,
+        userId: 1,
+        spotId: 9
+      },  
+      {
+        review: "Amazing house with amazing views and amenities! Perfect for a large group or family!",
+        stars: 5,
+        userId: 4,
+        spotId: 9
+      },  
+      {
+        review: "Great little cabin 50 minutes away from Bar Harbor and Acadia National park. Check-in was easy and Masha was very accommodating.!",
+        stars: 5,
+        userId: 1,
+        spotId: 10
+      }, 
+      {
+        review: "Please note there are other cabins on the property…Although there are other cabins it is very quiet and exactly what I was looking for. ",
+        stars: 4,
+        userId: 2,
+        spotId: 10
+      }, 
+      {
+        review: "Great place, close to Acadia. Loved our time at the cabin!",
+        stars: 5,
+        userId: 3,
+        spotId: 10
       }  
     ], {});
   },
