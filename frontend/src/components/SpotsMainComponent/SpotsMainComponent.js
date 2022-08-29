@@ -40,6 +40,18 @@ function SpotsMainComponent () {
                         )
                     })}
                 </div>
+                <div className="about">
+                    <div className="more-info">
+                        <a href="https://github.com/tylernaej/airbnb-tyler/wiki" >
+                        More Information
+                        </a>
+                    </div>
+                    <div className="built-by">
+                        <a href='https://github.com/tylernaej'>
+                        Built by Tyler Jean
+                        </a>
+                    </div>
+                </div>
             </div>
         )
     }

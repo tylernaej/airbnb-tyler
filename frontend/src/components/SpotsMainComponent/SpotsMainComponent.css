@@ -22,3 +22,23 @@
 .single-spot-wrapper:hover{
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .3);
 }
+
+.about{
+    width: 100%;
+    font-family: 'Manrope-Light';
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgb(180, 180, 180);
+    padding-top: 10px;
+
+}
+
+.more-info{
+    margin: 10px
+}
+
+.built-by{
+    margin: 10px;
+}

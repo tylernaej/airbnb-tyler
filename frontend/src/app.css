@@ -26,22 +26,5 @@
     width: 80%;
 }
 
-.about{
-    font-family: 'Manrope-Light';
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid rgb(180, 180, 180);
-    padding-top: 10px;
 
-}
-
-.more-info{
-    margin: 10px
-}
-
-.built-by{
-    margin: 10px;
-}
 
