@@ -30,7 +30,7 @@ function SingleSpotFullDetails () {
             <div>Loading</div>
         )
     }
-    
+
     return (
         <div className="spot-detail-wrapper">  
             <div className="title-info">
@@ -47,10 +47,15 @@ function SingleSpotFullDetails () {
                         </div>
                     </div>
                     <div className="ratings-reviews-info">
-                        <div className="ratings-info">
-                            <i className="fa-solid fa-star"></i>
-                            {rating}
-                        </div>
+                        {activeSpot.numReviews === 0 &&
+                            <div className="ratings-info">New!</div>
+                        }
+                        {activeSpot.numReviews > 0 && 
+                            <div className="ratings-info">
+                                <i className="fa-solid fa-star"></i>
+                                {rating}
+                            </div>
+                        }
                         <i className="fa-solid fa-grip-lines-vertical"></i>
                         <div className="reviews-info">
                             <ReviewModal rating={rating} setRating={setRating}/>
