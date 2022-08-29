@@ -46,7 +46,7 @@ function App() {
         </Switch>
         <div className="about">
           <div className="more-info">
-            <a href="https://github.com/tylernaej/airbnb-tyler" >
+            <a href="https://github.com/tylernaej/airbnb-tyler/wiki" >
               More Information
             </a>
           </div>
